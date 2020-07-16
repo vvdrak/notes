@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">note-android-app</string>
+    <string name="app_name">Записки</string>
+    <string name="add_note_text">Добавить</string>
 </resources>

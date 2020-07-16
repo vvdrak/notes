@@ -1,4 +1,4 @@
-package ru.gross.sample
+package ru.gross.notes
 
 import org.junit.Test
 

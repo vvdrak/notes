@@ -1,4 +1,4 @@
-package ru.gross.sample
+package ru.gross.notes
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
