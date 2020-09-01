@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.*
  */
 @Suppress("LeakingThis", "MemberVisibilityCanBePrivate")
 abstract class RecyclerAdapter<T, VH : RecyclerView.ViewHolder> : RecyclerView.Adapter<VH> {
-    protected var itemClickListener: ((View, T?) -> Unit)? = null
+    var itemClickListener: ((View, T?) -> Unit)? = null
     private val listDiffer: AsyncListDiffer<T>
 
     constructor(diffCallback: DiffUtil.ItemCallback<T>) {
@@ -56,20 +56,11 @@ abstract class RecyclerAdapter<T, VH : RecyclerView.ViewHolder> : RecyclerView.A
     /**
      * Возвращает элемент списка по его позиции
      *
-     * @param position Позиция элемента, может быть >= 0 и &lt; [.getItemCount]
+     * @param position Позиция элемента, должна быть >= 0 и &lt; [getItemCount]
      * @return Элемент списка
      */
     protected fun getItem(position: Int): T? =
         listDiffer.currentList[position]
-
-    /**
-     * Устанавливает обработчик нажатий на элемент списка
-     *
-     * @param l Обработчик нажатий
-     */
-    fun setOnItemClickListener(l: ((View, T?) -> Unit)?) {
-        itemClickListener = l
-    }
 
     /**
      * Возвращает текущий набор данных

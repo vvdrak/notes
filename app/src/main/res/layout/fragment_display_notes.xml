@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ui.list.DisplayNotesFragment">
+
+    <data>
+
+        <import type="ru.gross.notes.model.Note" />
+
+        <import type="java.util.List" />
+
+        <variable
+            name="notes"
+            type="List&lt;Note>" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/notes_presenter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/bottom_appbar_height"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:spanCount="2"
+            bind:itemsSource="@{notes}"
+            tools:itemCount="13"
+            tools:listitem="@layout/note_item_layout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

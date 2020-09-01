@@ -1,4 +1,10 @@
 <resources>
-    <string name="app_name">Записки</string>
+    <string name="app_name">Заметки</string>
     <string name="add_note_text">Добавить</string>
+    <string name="title_search">Поиск</string>
+    <string name="note_title_text">Заголовок</string>
+    <string name="note_content_text">Напишите, о чем думаете</string>
+    <string name="title_edit">Редактировать</string>
+    <string name="share_text">Поделиться</string>
+    <string name="transition_root">root transition animation</string>
 </resources>

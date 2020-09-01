@@ -39,3 +39,9 @@ class EventObserver<T>(
         event?.getContentIfNotHandled()?.let { onEventUnhandledContent(it) }
     }
 }
+
+/**
+ * Создает экземпляр [Event] со значением взятым из источника [T]
+ * @author gross_va
+ */
+fun <T> T.asEvent(): Event<T> = Event(this)

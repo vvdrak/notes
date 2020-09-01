@@ -1,5 +1,6 @@
 package ru.gross.notes.model
 
+import java.io.Serializable
 import java.time.Instant
 import java.util.*
 
@@ -12,23 +13,23 @@ data class Note(
      * Идентификатор заметки.
      */
     @JvmField
-    val id: String,
+    val id: String? = null,
 
     /**
      * Дата создания
      */
     @JvmField
-    val creationDate: Date,
+    val creationDate: Date? = null,
 
     /**
      * Заголовок заметки.
      */
     @JvmField
-    var title: CharSequence,
+    var title: CharSequence? = null,
 
     /**
      * Текст заметки.
      */
     @JvmField
-    var content: CharSequence
-)
+    var content: CharSequence? = null
+): Serializable

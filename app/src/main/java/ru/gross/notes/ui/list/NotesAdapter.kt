@@ -1,7 +1,8 @@
-package ru.gross.notes.ui
+package ru.gross.notes.ui.list
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import ru.gross.notes.R
 import ru.gross.notes.common.DataBoundRecyclerAdapter
@@ -16,7 +17,6 @@ import java.util.*
  * @author gross_va
  */
 class NotesAdapter : DataBoundRecyclerAdapter<Note, NoteViewHolder>(ITEM_CALLBACK) {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder =
         NoteViewHolder(inflateChild(parent, viewType))
 
@@ -40,8 +40,9 @@ class NotesAdapter : DataBoundRecyclerAdapter<Note, NoteViewHolder>(ITEM_CALLBAC
 class NoteViewHolder(binding: NoteItemLayoutBinding) :
     DataBoundViewHolder<NoteItemLayoutBinding>(binding) {
 
-    fun bindTo(item: Note?, l: ((View, Note?) -> Unit)?) {
-        binding.item = item
-        binding.root.setOnClickListener { l?.invoke(binding.root, item) }
+    fun bindTo(note: Note?, l: ((View, Note?) -> Unit)?) = with(binding) {
+        item = note
+        ViewCompat.setTransitionName(rootPane, item?.id)
+        root.setOnClickListener { l?.invoke(binding.root, item) }
     }
 }

@@ -24,20 +24,8 @@ sealed class State<out T> {
     /**
      * Состояние ошибки.
      * @param message Сообщение с текстом ошибки.
-     * @param retryCallback Функция обратного вызова для повторения операции.
      */
-    data class Error(
-        val message: String?,
-        val retryCallback: RetryCallback? = null
-    ) : State<Nothing>() {
-
-        /**
-         * Выполняет повтор.
-         */
-        fun retry() {
-            retryCallback?.let { it() }
-        }
-    }
+    data class Error(val message: String?) : State<Nothing>()
 
     override fun toString(): String {
         return when (this) {
@@ -46,17 +34,25 @@ sealed class State<out T> {
             is Error -> "Error[exception=$message]"
         }
     }
+}
 
-    /**
-     * Описывает операцию повторения для экземпляра [State]
-     * @author gross_va
-     */
-    interface RetryCallback {
-        /**
-         * Выполняет повторение.
-         */
-        operator fun invoke()
+/**
+ * Возвращает значение экземпляра [State]
+ * @author gross_va
+ */
+val <T> State<T>.value: T?
+    get() = when (this) {
+        is State.Success -> this.data
+        else -> null
     }
+
+/**
+ * Создает экземпляр [State] со значением взятым из источника [T]
+ * @author gross_va
+ */
+fun <T> T.asState(): State<T> = when (this) {
+    is Throwable -> State.Error(message)
+    else -> State.Success(this)
 }
 
 /**
@@ -66,12 +62,10 @@ sealed class State<out T> {
  * @param O Требуемый тип данных.
  * @author gross_va
  */
-inline fun <I, O> State<I>.map(crossinline transform: (I?) -> O?): State<O> {
-    return when (this) {
-        is State.Loading -> this
-        is State.Success -> State.Success(transform(data))
-        is State.Error -> this
-    }
+inline fun <I, O> State<I>.map(crossinline transform: (I?) -> O?): State<O> = when (this) {
+    is State.Loading -> this
+    is State.Success -> State.Success(transform(data))
+    is State.Error -> this
 }
 
 /**

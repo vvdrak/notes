@@ -11,10 +11,10 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/root_pane"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        app:cardBackgroundColor="@color/colorPrimaryDark"
         app:cardElevation="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -13,6 +13,8 @@ import ru.gross.notes.repository.NotesRepository
 import ru.gross.notes.repository.NotesRepositoryStub
 import ru.gross.notes.ui.MainActivity
 import ru.gross.notes.ui.MainViewModel
+import ru.gross.notes.ui.detail.DetailNoteFragment
+import ru.gross.notes.ui.list.DisplayNotesFragment
 import javax.inject.Singleton
 
 /**
@@ -28,6 +30,10 @@ interface NotesComponent {
     }
 
     fun inject(activity: MainActivity)
+
+    fun inject(fragment: DisplayNotesFragment)
+
+    fun inject(fragment: DetailNoteFragment)
 }
 
 /**
