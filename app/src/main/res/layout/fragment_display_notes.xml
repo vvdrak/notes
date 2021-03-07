@@ -7,9 +7,17 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import type="ru.gross.notes.model.Note" />
 
         <import type="java.util.List" />
+
+        <import type="ru.gross.notes.common.State" />
+
+        <variable
+            name="state"
+            type="State" />
 
         <variable
             name="notes"
@@ -24,12 +32,26 @@
             android:id="@+id/notes_presenter"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="@dimen/bottom_appbar_height"
+            android:visibility="@{state.isLoading() ? View.GONE: View.VISIBLE, default=gone}"
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:spanCount="2"
             bind:itemsSource="@{notes}"
             tools:itemCount="13"
-            tools:listitem="@layout/note_item_layout" />
+            tools:listitem="@layout/note_item_layout"
+            tools:visibility="visible" />
+
+        <include
+            layout="@layout/view_state_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/notes_presenter"
+            app:layout_constraintEnd_toEndOf="@+id/notes_presenter"
+            app:layout_constraintStart_toStartOf="@+id/notes_presenter"
+            app:layout_constraintTop_toTopOf="@+id/notes_presenter"
+            bind:state="@{state}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

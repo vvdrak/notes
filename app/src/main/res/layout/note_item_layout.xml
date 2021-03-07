@@ -12,10 +12,10 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/root_pane"
+        style="@style/Notes.AppTheme.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        app:cardElevation="2dp">
+        android:layout_margin="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,30 +24,30 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/note_title_holder"
-                style="@style/TextAppearance.MaterialComponents.Body1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:text="@{item.title}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Проснуться утром в 6:00" />
+                tools:text="@tools:sample/lorem" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/note_content_holder"
-                style="@style/TextAppearance.MaterialComponents.Body2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxLines="6"
                 android:text="@{item.content}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/note_title_holder"
-                tools:text="Проснуться утром и сделать зарядку" />
+                tools:text="@tools:sample/lorem/random" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

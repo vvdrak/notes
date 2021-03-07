@@ -4,6 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.MainActivity">
 
+    <data>
+
+        <import type="androidx.lifecycle.LiveData" />
+
+        <variable
+            name="title"
+            type="LiveData&lt;String>" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/primary_pane"
         android:layout_width="match_parent"
@@ -21,12 +30,13 @@
                 android:layout_height="match_parent"
                 app:contentInsetStart="0dp">
 
-                <TextView
-                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/app_name" />
+                    android:text="@{title}"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    tools:text="@string/app_name" />
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -35,8 +45,6 @@
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/default_horizontal_margin"
-            android:layout_marginEnd="@dimen/default_horizontal_margin"
             app:defaultNavHost="true"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:navGraph="@navigation/app_graph"

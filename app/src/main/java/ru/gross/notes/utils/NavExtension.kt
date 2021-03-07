@@ -14,8 +14,8 @@ import androidx.navigation.fragment.findNavController
  * @author gross_va
  */
 @MainThread
-fun Fragment.navigateUp() =
-    findNavController().navigateUp()
+fun navigateUp(navController: NavController) =
+    navController.navigateUp()
 
 /**
  * Выполняет безопасный переход к пункту назначения из текущего графика навигации

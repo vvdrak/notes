@@ -34,6 +34,33 @@ sealed class State<out T> {
             is Error -> "Error[exception=$message]"
         }
     }
+
+    /**
+     * Возвращает флаг, указывающий на то, что текущее состояние -- успех.
+     */
+    fun isSuccess(): Boolean = this is Success
+
+    /**
+     * Возвращает флаг, указывающий на то, что текущее состояние -- загрузка.
+     */
+    fun isLoading(): Boolean = this is Loading
+
+    /**
+     * Возвращает флаг, указывающий на то, что текущее состояние -- ошибка.
+     */
+    fun isError(): Boolean = this is Error
+
+    companion object {
+
+        @JvmStatic
+        fun <T> loading(): State<T> = Loading()
+
+        @JvmStatic
+        fun <T> error(message: String?): State<T> = Error(message)
+
+        @JvmStatic
+        fun <T> success(data: T): State<T> = Success(data)
+    }
 }
 
 /**
@@ -62,10 +89,25 @@ fun <T> T.asState(): State<T> = when (this) {
  * @param O Требуемый тип данных.
  * @author gross_va
  */
-inline fun <I, O> State<I>.map(crossinline transform: (I?) -> O?): State<O> = when (this) {
+inline fun <I, O> State<I>.map(crossinline transform: (I?) -> O): State<O> = when (this) {
     is State.Loading -> this
     is State.Success -> State.Success(transform(data))
     is State.Error -> this
+}
+
+/**
+ * Заменяет экземпляр [State].
+ * @param stateSupplier Функция замены экземпляра.
+ * @param I Исходный тип данных.
+ * @param O Требуемый тип данных.
+ * @author gross_va
+ */
+inline fun <I, O> State<I>.switchMap(crossinline stateSupplier: (I?) -> State<O>): State<O> {
+    return when (this) {
+        is State.Loading -> this
+        is State.Success -> stateSupplier(data)
+        is State.Error -> this
+    }
 }
 
 /**

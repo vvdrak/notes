@@ -11,23 +11,47 @@
         <variable
             name="note"
             type="Note" />
+
+        <variable
+            name="editable"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root_pane"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/default_horizontal_margin"
+        android:layout_marginVertical="8dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/note_title_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:cursorVisible="@{editable}"
+            android:focusable="@{editable}"
             android:text="@{note.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Проснуться утром в 6:00" />
+            tools:text="@tools:sample/lorem" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/note_content_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@null"
+            android:cursorVisible="@{editable}"
+            android:focusable="@{editable}"
+            android:gravity="top"
+            android:minLines="3"
+            android:text="@{note.content}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/note_title_holder"
+            tools:text="@tools:sample/lorem/random" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

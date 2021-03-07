@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import ru.gross.notes.R
 import ru.gross.notes.common.BaseFragment
 import ru.gross.notes.common.handle
@@ -17,6 +16,10 @@ import javax.inject.Inject
 class DisplayNotesFragment : BaseFragment<FragmentDisplayNotesBinding>(R.layout.fragment_display_notes) {
     @Inject
     lateinit var factory: InjectableViewModelFactory
+
+    @Inject
+    lateinit var notesAdapter: NotesAdapter
+
     private val viewModel: MainViewModel by activityViewModels { factory }
 
     override fun onAttach(context: Context) {
@@ -25,12 +28,19 @@ class DisplayNotesFragment : BaseFragment<FragmentDisplayNotesBinding>(R.layout.
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.notesPresenter.adapter = NotesAdapter().apply {
+        binding.notesPresenter.adapter = notesAdapter.apply {
             itemClickListener = { view, note -> note?.let { viewModel.setAsCurrent(view, it) } }
         }
 
-        viewModel.notes.observe(viewLifecycleOwner, Observer { state ->
-            binding.apply { state.handle(successHandler = { notes = it }) }
-        })
+        viewModel.notes.observe(viewLifecycleOwner) { state ->
+            binding.apply {
+                this.state = state.apply { handle(successHandler = { notes = it }) }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        binding.notesPresenter.adapter = null
+        super.onDestroyView()
     }
 }

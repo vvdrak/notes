@@ -8,12 +8,12 @@ import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.dataBinding
+import androidx.fragment.app.dataBindings
 
 abstract class BaseFragment<VB : ViewDataBinding>(
     @LayoutRes contentLayoutId: Int
 ) : Fragment(contentLayoutId) {
-    protected val binding: VB by dataBinding(contentLayoutId)
+    protected val binding: VB by dataBindings(contentLayoutId)
 
     @CallSuper
     override fun onCreateView(

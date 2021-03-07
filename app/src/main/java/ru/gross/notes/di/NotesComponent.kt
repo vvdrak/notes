@@ -2,10 +2,7 @@ package ru.gross.notes.di
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
-import dagger.Binds
-import dagger.BindsInstance
-import dagger.Component
-import dagger.Module
+import dagger.*
 import dagger.multibindings.IntoMap
 import ru.gross.notes.interactors.DisplayNotes
 import ru.gross.notes.interactors.UseCase
@@ -15,6 +12,7 @@ import ru.gross.notes.ui.MainActivity
 import ru.gross.notes.ui.MainViewModel
 import ru.gross.notes.ui.detail.DetailNoteFragment
 import ru.gross.notes.ui.list.DisplayNotesFragment
+import ru.gross.notes.ui.list.NotesAdapter
 import javax.inject.Singleton
 
 /**
@@ -22,7 +20,7 @@ import javax.inject.Singleton
  * @author gross_va
  */
 @Singleton
-@Component(modules = [MainModule::class])
+@Component(modules = [MainModule::class, UIModule::class])
 interface NotesComponent {
     @Component.Factory
     interface Factory {
@@ -53,4 +51,12 @@ interface MainModule {
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     fun bindMainViewModel(viewModel: MainViewModel): ViewModel
+}
+
+@Module
+object UIModule {
+
+    @JvmStatic
+    @Provides
+    fun provideNoteAdapter(): NotesAdapter = NotesAdapter()
 }

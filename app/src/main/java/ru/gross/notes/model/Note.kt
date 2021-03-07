@@ -1,7 +1,6 @@
 package ru.gross.notes.model
 
 import java.io.Serializable
-import java.time.Instant
 import java.util.*
 
 /**
@@ -32,4 +31,4 @@ data class Note(
      */
     @JvmField
     var content: CharSequence? = null
-): Serializable
+) : Serializable

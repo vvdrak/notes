@@ -29,10 +29,12 @@ class NotesAdapter : DataBoundRecyclerAdapter<Note, NoteViewHolder>(ITEM_CALLBAC
         @JvmField
         val ITEM_CALLBACK = object : DiffUtil.ItemCallback<Note>() {
             override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean =
-                oldItem.hashCode() == newItem.hashCode()
+                Objects.equals(oldItem.id, newItem.id)
 
             override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean =
-                Objects.equals(oldItem.id, newItem.id)
+                Objects.equals(oldItem.content, newItem.content) &&
+                        Objects.equals(oldItem.creationDate, newItem.creationDate) &&
+                        Objects.equals(oldItem.title, newItem.title)
         }
     }
 }
