@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ui.detail.DetailNoteFragment">
 
     <data>
 
-        <import type="ru.gross.notes.model.Note" />
+        <import type="android.view.View" />
+
+        <import type="ru.gross.notes.ui.detail.NoteDetailView" />
+
+        <import type="ru.gross.notes.common.State" />
 
         <variable
             name="note"
-            type="Note" />
+            type="NoteDetailView" />
 
         <variable
             name="editable"
             type="Boolean" />
+
+        <variable
+            name="state"
+            type="State" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +32,13 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="@dimen/default_horizontal_margin"
         android:layout_marginVertical="8dp">
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{state.isLoading() ? View.GONE: View.VISIBLE, default=gone}"
+            app:constraint_referenced_ids="note_title_holder, note_content_holder"
+            tools:visibility="visible" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/note_title_holder"
@@ -52,6 +68,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/note_title_holder"
             tools:text="@tools:sample/lorem/random" />
+
+        <include
+            layout="@layout/view_state_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:state="@{state}"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

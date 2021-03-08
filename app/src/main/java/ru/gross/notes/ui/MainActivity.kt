@@ -11,6 +11,7 @@ import ru.gross.notes.R
 import ru.gross.notes.common.EventObserver
 import ru.gross.notes.databinding.ActivityMainBinding
 import ru.gross.notes.di.InjectableViewModelFactory
+import ru.gross.notes.model.Action
 import ru.gross.notes.notesComponent
 import ru.gross.notes.ui.list.DisplayNotesFragmentDirections
 import ru.gross.notes.utils.drawableResource
@@ -34,6 +35,15 @@ class MainActivity : AppCompatActivity() {
             title = viewModel.title
             fab.setOnClickListener { viewModel.setAsCurrent(it, null) }
             bottomBar.setNavigationOnClickListener { navigateUp(navController) }
+            bottomBar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_share -> {
+                        //viewModel.shareCurrent()
+                        return@setOnMenuItemClickListener true
+                    }
+                    else -> return@setOnMenuItemClickListener false
+                }
+            }
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -51,14 +61,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.current.observe(this, EventObserver {
-            val transitionName = ViewCompat.getTransitionName(it.view)
-            val extras = if (transitionName != null) FragmentNavigatorExtras(it.view to transitionName) else null
-            navigate(
-                navController,
-                DisplayNotesFragmentDirections.toNoteCard(it.item),
-                navExtras = extras
-            )
+//        viewModel.current.observe(this, EventObserver {
+//            val transitionName = ViewCompat.getTransitionName(it.view)
+//            val extras = if (transitionName != null) FragmentNavigatorExtras(it.view to transitionName) else null
+//            navigate(
+//                navController,
+//                DisplayNotesFragmentDirections.toNoteCard(it.item),
+//                navExtras = extras
+//            )
+//        })
+
+        viewModel.userAction.observe(this, EventObserver {
+            when (it) {
+                Action.SHARE -> TODO()
+                else -> throw IllegalStateException("another action not supported")
+            }
         })
     }
 }

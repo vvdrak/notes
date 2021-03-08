@@ -4,7 +4,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.withTimeout
 import ru.gross.notes.common.State
 import ru.gross.notes.common.asState
@@ -28,7 +27,7 @@ interface NotesRepository : Repository {
     /**
      * Возвращает список заметок.
      */
-    fun getAll(): Flow<State<List<Note>>>
+    fun getAll(): Flow<State<List<Note>?>>
 }
 
 /**
@@ -40,7 +39,7 @@ class NotesRepositoryImpl : NotesRepository {
         TODO("Not yet implemented")
     }
 
-    override fun getAll(): Flow<State<List<Note>>> {
+    override fun getAll(): Flow<State<List<Note>?>> {
         TODO("Not yet implemented")
     }
 }
@@ -50,10 +49,13 @@ class NotesRepositoryImpl : NotesRepository {
  * @author gross_va
  */
 class NotesRepositoryStub @Inject constructor() : NotesRepository {
-    override fun getById(id: String): Flow<State<Note?>> =
-        flowOf(data.firstOrNull { it.id == id }.asState())
+    override fun getById(id: String): Flow<State<Note?>> = flow {
+        emit(State.Loading())
+        val value = withTimeoutInternal { data.firstOrNull { it.id == id }.asState() }
+        emit(value)
+    }
 
-    override fun getAll(): Flow<State<List<Note>>> = flow {
+    override fun getAll(): Flow<State<List<Note>?>> = flow {
         emit(State.Loading())
         val value = withTimeoutInternal { data.asState() }
         emit(value)
@@ -78,7 +80,7 @@ class NotesRepositoryStub @Inject constructor() : NotesRepository {
         private val MIN_NETWORK_DELAY = TimeUnit.MILLISECONDS.toMillis(100L).toInt()
 
         @JvmStatic
-        private val MAX_NETWORK_DELAY = TimeUnit.SECONDS.toMillis(4L).toInt()
+        private val MAX_NETWORK_DELAY = TimeUnit.SECONDS.toMillis(1L).toInt()
 
         @JvmStatic
         private val TIMEOUT_MS = TimeUnit.SECONDS.toMillis(MAX_NETWORK_DELAY - 1L)

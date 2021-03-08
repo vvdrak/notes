@@ -1,18 +1,16 @@
-package ru.gross.notes.model
+package ru.gross.notes.ui.detail
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
-/**
- * Описывает заметку.
- * @author gross_va
- */
-data class Note(
+@Parcelize
+class NoteDetailView(
     /**
      * Идентификатор заметки.
      */
     @JvmField
     val id: String? = null,
-
     /**
      * Дата создания
      */
@@ -30,4 +28,4 @@ data class Note(
      */
     @JvmField
     var content: CharSequence? = null
-)
+) : Parcelable

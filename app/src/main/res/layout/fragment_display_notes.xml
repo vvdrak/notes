@@ -9,7 +9,7 @@
 
         <import type="android.view.View" />
 
-        <import type="ru.gross.notes.model.Note" />
+        <import type="ru.gross.notes.ui.list.NoteView" />
 
         <import type="java.util.List" />
 
@@ -21,7 +21,7 @@
 
         <variable
             name="notes"
-            type="List&lt;Note>" />
+            type="List&lt;NoteView>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,13 +45,14 @@
 
         <include
             layout="@layout/view_state_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/notes_presenter"
             app:layout_constraintEnd_toEndOf="@+id/notes_presenter"
             app:layout_constraintStart_toStartOf="@+id/notes_presenter"
             app:layout_constraintTop_toTopOf="@+id/notes_presenter"
-            bind:state="@{state}" />
+            bind:state="@{state}"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

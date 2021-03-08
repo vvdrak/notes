@@ -7,10 +7,9 @@ import ru.gross.notes.di.DaggerNotesComponent
 import ru.gross.notes.di.NotesComponent
 
 class NotesApp : Application() {
-    val appComponent: NotesComponent by lazy { initializeComponent() }
-
-    private fun initializeComponent(): NotesComponent =
+    val appComponent: NotesComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
         DaggerNotesComponent.factory().create(this)
+    }
 }
 
 /**

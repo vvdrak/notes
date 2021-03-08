@@ -2,14 +2,16 @@ package ru.gross.notes.ui
 
 import android.app.Application
 import android.view.View
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import ru.gross.notes.R
 import ru.gross.notes.common.Event
 import ru.gross.notes.common.NavMove
-import ru.gross.notes.common.State
 import ru.gross.notes.common.asEvent
-import ru.gross.notes.interactors.DisplayNotes
-import ru.gross.notes.model.Note
+import ru.gross.notes.model.Action
+import ru.gross.notes.ui.list.NoteView
 import ru.gross.notes.utils.stringResource
 import javax.inject.Inject
 
@@ -19,7 +21,6 @@ import javax.inject.Inject
  */
 class MainViewModel @Inject constructor(
     application: Application,
-    displayNotes: DisplayNotes
 ) : AndroidViewModel(application) {
     /**
      * Заголовок приложения.
@@ -27,22 +28,21 @@ class MainViewModel @Inject constructor(
     val title: LiveData<String> = MutableLiveData(stringResource(R.string.app_name))
 
     /**
-     * Список заметок.
-     */
-    val notes: LiveData<State<List<Note>>> = displayNotes(null)
-        .asLiveData(viewModelScope.coroutineContext)
-
-    /**
      * Текущая заметка, выбранная пользователем.
      */
-    val current: LiveData<Event<NavMove<Note>>> = MutableLiveData()
+    val current: LiveData<Event<NavMove<*>>> = MutableLiveData()
+
+    /**
+     * Действие пользователя.
+     */
+    val userAction: LiveData<Event<Action>> = MutableLiveData()
 
     /**
      * Устанавливает переданный в аргументах [note] как основной.
-     * В случае, если [note] == `null`, основным станет новый экземпляр [Note]
+     * В случае, если [note] == `null`, основным станет новый экземпляр [NoteView]
      */
-    fun setAsCurrent(view: View, note: Note?) {
-        val content = NavMove(note ?: Note(), view)
+    fun setAsCurrent(view: View, note: NoteView?) {
+        val content = NavMove(note ?: NoteView(), view)
         (current as MutableLiveData).value = content.asEvent()
         val titleRes = if (note == null) R.string.new_note_text else R.string.app_name
         (title as MutableLiveData).value = stringResource(titleRes)

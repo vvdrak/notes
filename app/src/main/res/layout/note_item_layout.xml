@@ -5,9 +5,11 @@
 
     <data>
 
+        <import type="ru.gross.notes.ui.list.NoteView" />
+
         <variable
             name="item"
-            type="ru.gross.notes.model.Note" />
+            type="NoteView" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

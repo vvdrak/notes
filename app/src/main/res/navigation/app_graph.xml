@@ -20,6 +20,6 @@
         tools:layout="@layout/fragment_note_detail_card">
         <argument
             android:name="note"
-            app:argType="ru.gross.notes.model.Note" />
+            app:argType="ru.gross.notes.ui.list.NoteView" />
     </fragment>
 </navigation>

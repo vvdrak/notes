@@ -12,6 +12,6 @@ import javax.inject.Inject
  */
 class DisplayNotes @Inject constructor(
     private val repository: NotesRepository
-) : UseCase<Any?, Flow<State<List<Note>>>> {
-    override fun invoke(args: Any?): Flow<State<List<Note>>> = repository.getAll()
+) : UseCase<Any?, Flow<State<List<Note>?>>> {
+    override fun invoke(args: Any?): Flow<State<List<Note>?>> = repository.getAll()
 }
