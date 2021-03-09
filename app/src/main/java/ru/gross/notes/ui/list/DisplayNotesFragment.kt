@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import ru.gross.notes.R
 import ru.gross.notes.common.BaseFragment
-import ru.gross.notes.common.handle
+import ru.gross.notes.data.common.handle
 import ru.gross.notes.databinding.FragmentDisplayNotesBinding
 import ru.gross.notes.di.InjectableViewModelFactory
 import ru.gross.notes.navigation.Navigator

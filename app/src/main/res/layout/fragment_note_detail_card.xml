@@ -11,7 +11,7 @@
 
         <import type="ru.gross.notes.ui.detail.NoteDetailView" />
 
-        <import type="ru.gross.notes.common.State" />
+        <import type="ru.gross.notes.data.common.State" />
 
         <variable
             name="note"

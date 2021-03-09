@@ -5,30 +5,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withTimeout
-import ru.gross.notes.common.State
-import ru.gross.notes.common.asState
-import ru.gross.notes.model.Note
+import ru.gross.notes.data.common.State
+import ru.gross.notes.data.common.asState
+import ru.gross.notes.data.model.Note
+import ru.gross.notes.data.repository.NotesRepository
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-
-/**
- * Описывает репоизторий заметок.
- * @author gross_va
- */
-interface NotesRepository : Repository {
-
-    /**
-     * Возвращает заметку [Note] по ее идентификатору.
-     * @param id Идентификтаор заметки.
-     */
-    fun getById(id: String): Flow<State<Note?>>
-
-    /**
-     * Возвращает список заметок.
-     */
-    fun getAll(): Flow<State<List<Note>?>>
-}
 
 /**
  * Реализация репозитория заметок.

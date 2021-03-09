@@ -38,6 +38,10 @@ android {
     }
 }
 
+dependencies {
+    api project(path: ':data')
+}
+
 // jetbrains
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"

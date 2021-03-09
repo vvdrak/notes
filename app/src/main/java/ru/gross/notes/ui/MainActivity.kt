@@ -3,19 +3,14 @@ package ru.gross.notes.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.dataBindings
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import ru.gross.notes.R
 import ru.gross.notes.common.EventObserver
 import ru.gross.notes.databinding.ActivityMainBinding
 import ru.gross.notes.di.InjectableViewModelFactory
-import ru.gross.notes.model.Action
 import ru.gross.notes.notesComponent
-import ru.gross.notes.ui.list.DisplayNotesFragmentDirections
 import ru.gross.notes.utils.drawableResource
-import ru.gross.notes.utils.navigate
 import ru.gross.notes.utils.navigateUp
 import javax.inject.Inject
 

@@ -8,9 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.gross.notes.R
 import ru.gross.notes.common.Event
-import ru.gross.notes.common.NavMove
 import ru.gross.notes.common.asEvent
-import ru.gross.notes.model.Action
 import ru.gross.notes.ui.list.NoteView
 import ru.gross.notes.utils.stringResource
 import javax.inject.Inject
@@ -30,7 +28,7 @@ class MainViewModel @Inject constructor(
     /**
      * Текущая заметка, выбранная пользователем.
      */
-    val current: LiveData<Event<NavMove<*>>> = MutableLiveData()
+    val current: LiveData<Event<Screen>> = MutableLiveData(Screen.LIST.asEvent())
 
     /**
      * Действие пользователя.
@@ -42,9 +40,9 @@ class MainViewModel @Inject constructor(
      * В случае, если [note] == `null`, основным станет новый экземпляр [NoteView]
      */
     fun setAsCurrent(view: View, note: NoteView?) {
-        val content = NavMove(note ?: NoteView(), view)
-        (current as MutableLiveData).value = content.asEvent()
-        val titleRes = if (note == null) R.string.new_note_text else R.string.app_name
-        (title as MutableLiveData).value = stringResource(titleRes)
+//        val content = NavMove(note ?: NoteView(), view)
+//        (current as MutableLiveData).value = content.asEvent()
+//        val titleRes = if (note == null) R.string.new_note_text else R.string.app_name
+//        (title as MutableLiveData).value = stringResource(titleRes)
     }
 }

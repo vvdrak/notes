@@ -1,9 +1,9 @@
 package ru.gross.notes.interactors
 
 import kotlinx.coroutines.flow.Flow
-import ru.gross.notes.common.State
-import ru.gross.notes.model.Note
-import ru.gross.notes.repository.NotesRepository
+import ru.gross.notes.data.common.State
+import ru.gross.notes.data.model.Note
+import ru.gross.notes.data.repository.NotesRepository
 import javax.inject.Inject
 
 /**

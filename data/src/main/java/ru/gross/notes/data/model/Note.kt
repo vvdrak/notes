@@ -1,4 +1,4 @@
-package ru.gross.notes.model
+package ru.gross.notes.data.model
 
 import java.util.*
 

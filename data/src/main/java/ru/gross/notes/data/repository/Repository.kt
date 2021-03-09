@@ -1,10 +1,10 @@
-package ru.gross.notes.repository
+package ru.gross.notes.data.repository
 
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
-import ru.gross.notes.common.State
+import ru.gross.notes.data.common.State
 
 /**
  * Маркер репозитория.

@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import ru.gross.notes.R
 import ru.gross.notes.common.BaseFragment
-import ru.gross.notes.common.handle
+import ru.gross.notes.data.common.handle
 import ru.gross.notes.databinding.FragmentNoteDetailCardBinding
 import ru.gross.notes.notesComponent
 import javax.inject.Inject

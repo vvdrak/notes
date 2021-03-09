@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import ru.gross.notes.common.State
-import ru.gross.notes.common.mapState
+import ru.gross.notes.data.common.State
+import ru.gross.notes.data.common.mapState
 import ru.gross.notes.interactors.DisplayNotes
 import ru.gross.notes.mapper.NoteMapper
 import javax.inject.Inject

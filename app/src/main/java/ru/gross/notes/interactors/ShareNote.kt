@@ -1,7 +1,7 @@
 package ru.gross.notes.interactors
 
 import android.content.Context
-import ru.gross.notes.model.Note
+import ru.gross.notes.data.model.Note
 import ru.gross.notes.navigation.Navigator
 import javax.inject.Inject
 

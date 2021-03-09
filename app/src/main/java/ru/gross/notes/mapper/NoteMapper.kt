@@ -1,6 +1,6 @@
 package ru.gross.notes.mapper
 
-import ru.gross.notes.model.Note
+import ru.gross.notes.data.model.Note
 import ru.gross.notes.ui.list.NoteView
 import javax.inject.Inject
 
