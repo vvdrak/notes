@@ -39,9 +39,14 @@ class DisplayNotesFragment : BaseFragment<FragmentDisplayNotesBinding>(R.layout.
 
         viewModel.notes.observe(viewLifecycleOwner) { state ->
             binding.apply {
-                this.state = state.apply { handle(successHandler = { notes = it }) }
+                this.state = state
+                state.handle(successHandler = ::setNotes, errorHandler = ::handleError)
             }
         }
+    }
+
+    private fun handleError(error: String?) {
+
     }
 
     override fun onDestroyView() {

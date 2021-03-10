@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.dataBindings
 import androidx.navigation.findNavController
 import ru.gross.notes.R
-import ru.gross.notes.common.EventObserver
 import ru.gross.notes.databinding.ActivityMainBinding
 import ru.gross.notes.di.InjectableViewModelFactory
 import ru.gross.notes.notesComponent
@@ -28,12 +27,13 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             lifecycleOwner = this@MainActivity
             title = viewModel.title
-            fab.setOnClickListener { viewModel.setAsCurrent(it, null) }
-            bottomBar.setNavigationOnClickListener { navigateUp(navController) }
+            fab.setOnClickListener { displayStubMessage() }
+            toolbar.setNavigationOnClickListener { navigateUp(navController) }
+            bottomBar.setNavigationOnClickListener { displayStubMessage() }
             bottomBar.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_share -> {
-                        //viewModel.shareCurrent()
+                        displayStubMessage()
                         return@setOnMenuItemClickListener true
                     }
                     else -> return@setOnMenuItemClickListener false
@@ -44,33 +44,18 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.navigation_detail_note -> {
-                    binding.bottomBar.navigationIcon = null
                     binding.fab.hide()
+                    binding.toolbar.navigationIcon = drawableResource(R.drawable.ic_arrow_back_24px)
+                    binding.bottomBar.navigationIcon = null
                     binding.bottomBar.replaceMenu(R.menu.detail_note_menu)
                 }
                 else -> {
                     binding.fab.show()
+                    binding.toolbar.navigationIcon = null
                     binding.bottomBar.navigationIcon = drawableResource(R.drawable.ic_menu_24px)
                     binding.bottomBar.replaceMenu(R.menu.bottom_appbar_menu)
                 }
             }
         }
-
-//        viewModel.current.observe(this, EventObserver {
-//            val transitionName = ViewCompat.getTransitionName(it.view)
-//            val extras = if (transitionName != null) FragmentNavigatorExtras(it.view to transitionName) else null
-//            navigate(
-//                navController,
-//                DisplayNotesFragmentDirections.toNoteCard(it.item),
-//                navExtras = extras
-//            )
-//        })
-
-        viewModel.userAction.observe(this, EventObserver {
-            when (it) {
-                Action.SHARE -> TODO()
-                else -> throw IllegalStateException("another action not supported")
-            }
-        })
     }
 }

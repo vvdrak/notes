@@ -3,6 +3,10 @@ package ru.gross.notes.ui.list
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
+/**
+ * ViewState для отображения заметки.
+ * @author gross_va
+ */
 @Parcelize
 data class NoteView(
     /**

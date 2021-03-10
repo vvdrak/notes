@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Заметки</string>
+    
+    <string name="feature_not_available_text">Недоступно в текущей версии</string>
+    
     <string name="add_note_text">Добавить</string>
     <string name="title_search">Поиск</string>
     <string name="note_title_text">Заголовок</string>

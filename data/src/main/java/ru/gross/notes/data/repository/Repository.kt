@@ -2,7 +2,6 @@ package ru.gross.notes.data.repository
 
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import ru.gross.notes.data.common.State
 
@@ -20,7 +19,6 @@ interface Repository
  * @param T Тип данных.
  * @author vva2@gelicon.biz
  */
-@ExperimentalCoroutinesApi
 fun <T> Repository.remoteFlow(
     delay: Long = 500L,
     block: suspend FlowCollector<State<T>>.() -> Unit
