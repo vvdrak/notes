@@ -40,7 +40,8 @@ class DetailNoteFragment : BaseFragment<FragmentNoteDetailCardBinding>(R.layout.
         super.onViewCreated(view, savedInstanceState)
         viewModel.details.observe(viewLifecycleOwner) { state ->
             binding.apply {
-                this.state = state.apply { handle(successHandler = { note = it }) }
+                this.state = state
+                state.handle(successHandler = ::setNote, errorHandler = ::handleError)
             }
         }
     }

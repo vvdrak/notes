@@ -45,10 +45,6 @@ class DisplayNotesFragment : BaseFragment<FragmentDisplayNotesBinding>(R.layout.
         }
     }
 
-    private fun handleError(error: String?) {
-
-    }
-
     override fun onDestroyView() {
         binding.notesPresenter.adapter = null
         super.onDestroyView()
