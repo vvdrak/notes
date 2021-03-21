@@ -1,9 +1,9 @@
 package ru.gross.notes.ui.detail
 
 import androidx.lifecycle.*
-import ru.gross.notes.data.common.State
-import ru.gross.notes.data.common.mapState
 import ru.gross.notes.interactors.DisplayNoteDetail
+import ru.gross.notes.common.State
+import ru.gross.notes.common.mapState
 import ru.gross.notes.mapper.NoteDetailMapper
 import javax.inject.Inject
 

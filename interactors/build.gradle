@@ -7,11 +7,19 @@ java {
 }
 
 dependencies {
+    implementation project(path: ':data')
     implementation project(path: ':domain')
 }
 
 // jetbrains
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+}
+
+// javax
+dependencies {
+    implementation "javax.inject:javax.inject:$versions.javax"
 }

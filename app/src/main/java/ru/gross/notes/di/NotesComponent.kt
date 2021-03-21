@@ -5,16 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.*
 import dagger.multibindings.IntoMap
-import ru.gross.notes.data.repository.NotesRepository
-import ru.gross.notes.interactors.DisplayNoteDetail
-import ru.gross.notes.interactors.DisplayNotes
-import ru.gross.notes.interactors.ShareNote
-import ru.gross.notes.interactors.UseCase
+import ru.gross.notes.interactors.*
 import ru.gross.notes.mapper.Mapper
 import ru.gross.notes.mapper.NoteDetailMapper
 import ru.gross.notes.mapper.NoteMapper
 import ru.gross.notes.navigation.Navigator
 import ru.gross.notes.navigation.NavigatorImpl
+import ru.gross.notes.repository.NotesRepository
 import ru.gross.notes.repository.NotesRepositoryStub
 import ru.gross.notes.ui.MainActivity
 import ru.gross.notes.ui.MainViewModel
@@ -57,13 +54,13 @@ interface NotesComponent {
         fun bindNotesRepository(impl: NotesRepositoryStub): NotesRepository
 
         @Binds
-        fun bindDisplayNotes(impl: DisplayNotes): UseCase<*, *>
+        fun bindDisplayNotes(impl: DisplayNoteImpl): DisplayNotes
 
         @Binds
-        fun bindDisplayNoteDetail(impl: DisplayNoteDetail): UseCase<*, *>
+        fun bindDisplayNoteDetail(impl: DisplayNoteDetailImpl): DisplayNoteDetail
 
         @Binds
-        fun bindShareNote(impl: ShareNote): UseCase<*, *>
+        fun bindShareNote(impl: ShareNoteImpl): ShareNote
 
         @Binds
         fun bindNoteDetailMapper(impl: NoteDetailMapper): Mapper<*, *>

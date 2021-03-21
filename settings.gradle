@@ -1,3 +1,5 @@
+include ':interactors'
+include ':domain'
 include ':data'
 include ':app'
 rootProject.name = "note-android-app"

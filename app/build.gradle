@@ -39,7 +39,9 @@ android {
 }
 
 dependencies {
-    api project(path: ':data')
+    implementation project(path: ':data')
+    implementation project(path: ':domain')
+    implementation project(path: ':interactors')
 }
 
 // jetbrains
