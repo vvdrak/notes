@@ -13,11 +13,11 @@
 
         <import type="java.util.List" />
 
-        <import type="ru.gross.notes.common.State" />
+        <import type="ru.gross.notes.common.Resource" />
 
         <variable
             name="state"
-            type="ru.gross.notes.common.State" />
+            type="ru.gross.notes.common.Resource" />
 
         <variable
             name="notes"

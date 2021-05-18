@@ -1,8 +1,8 @@
 package ru.gross.notes.repository
 
 import kotlinx.coroutines.flow.Flow
-import ru.gross.notes.common.State
-import ru.gross.notes.common.asState
+import ru.gross.notes.common.Resource
+import ru.gross.notes.common.asResource
 import ru.gross.notes.db.NotesDao
 import ru.gross.notes.domain.Note
 import ru.gross.notes.mapper.NoteEntityMapper
@@ -17,17 +17,17 @@ class NotesRepositoryImpl @Inject constructor(
     private val dao: NotesDao,
     private val entityMapper: NoteEntityMapper
 ) : NotesRepository {
-    override fun getById(id: String): Flow<State<Note?>> = stateFlow {
+    override fun getById(id: String): Flow<Resource<Note?>> = resourceFlow {
         val source = dao.getById(id)
             .run(entityMapper::apply)
-            .asState()
+            .asResource()
         emit(source)
     }
 
-    override fun getAll(): Flow<State<List<Note>?>> = stateFlow {
+    override fun getAll(): Flow<Resource<List<Note>?>> = resourceFlow {
         val source = dao.getAll()
             .mapNotNull(entityMapper::apply)
-            .asState()
+            .asResource()
         emit(source)
     }
 }

@@ -7,27 +7,27 @@ package ru.gross.notes.common
  * @param T Тип значения.
  * @author gross_va
  */
-sealed class State<out T> {
+sealed class Resource<out T> {
 
     /**
      * Состояние загрузки. Параметр [delay] указывает на время ожидания, после которого следует отобразить индикатор загрузки.
      * Это позволяет избежать мерцания индикатора, если сама загрузка прошла быстрее указанного времени.
      * @param delay Настраиваемое время ожидания в мс.
      */
-    data class Loading(val delay: Long = 500L) : State<Nothing>()
+    data class Loading(val delay: Long = 500L) : Resource<Nothing>()
 
     /**
      * Состояние успешности.
      * @param data Данные.
      * @param T Тип данных.
      */
-    data class Success<out T>(val data: T?) : State<T>()
+    data class Success<out T>(val data: T?) : Resource<T>()
 
     /**
      * Состояние ошибки.
      * @param message Сообщение с текстом ошибки.
      */
-    data class Error(val message: String?) : State<Nothing>()
+    data class Error(val message: String?) : Resource<Nothing>()
 
     override fun toString(): String {
         return when (this) {
@@ -55,12 +55,12 @@ sealed class State<out T> {
     companion object {
 
         @JvmStatic
-        fun <T> loading(): State<T> = Loading()
+        fun <T> loading(): Resource<T> = Loading()
 
         @JvmStatic
-        fun <T> error(message: String?): State<T> = Error(message)
+        fun <T> error(message: String?): Resource<T> = Error(message)
 
         @JvmStatic
-        fun <T> success(data: T): State<T> = Success(data)
+        fun <T> success(data: T): Resource<T> = Success(data)
     }
 }

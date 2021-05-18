@@ -2,8 +2,8 @@ package ru.gross.notes.ui.detail
 
 import androidx.lifecycle.*
 import ru.gross.notes.interactors.DisplayNoteDetail
-import ru.gross.notes.common.State
-import ru.gross.notes.common.mapState
+import ru.gross.notes.common.Resource
+import ru.gross.notes.common.mapResource
 import ru.gross.notes.mapper.NoteDetailMapper
 import javax.inject.Inject
 
@@ -16,9 +16,9 @@ class NoteDetailsViewModel(
     /**
      * Детальная информация заметки.
      */
-    val details: LiveData<State<NoteDetailView?>> =
+    val details: LiveData<Resource<NoteDetailView?>> =
         displayNoteDetail(noteId)
-            .mapState(noteDetailMapper::apply)
+            .mapResource(noteDetailMapper::apply)
             .asLiveData(viewModelScope.coroutineContext)
 
     class Factory @Inject constructor(

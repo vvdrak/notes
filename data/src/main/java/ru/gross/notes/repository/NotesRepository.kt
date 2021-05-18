@@ -1,7 +1,7 @@
 package ru.gross.notes.repository
 
 import kotlinx.coroutines.flow.Flow
-import ru.gross.notes.common.State
+import ru.gross.notes.common.Resource
 import ru.gross.notes.domain.Note
 
 /**
@@ -15,10 +15,10 @@ interface NotesRepository : Repository {
      * Возвращает [заметку][Note] по ее идентификатору.
      * @param id Идентификтаор заметки.
      */
-    fun getById(id: String): Flow<State<Note?>>
+    fun getById(id: String): Flow<Resource<Note?>>
 
     /**
      * Возвращает список заметок.
      */
-    fun getAll(): Flow<State<List<Note>?>>
+    fun getAll(): Flow<Resource<List<Note>?>>
 }

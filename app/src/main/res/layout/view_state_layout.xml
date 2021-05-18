@@ -7,11 +7,11 @@
 
         <import type="android.view.View" />
 
-        <import type="ru.gross.notes.common.State" />
+        <import type="ru.gross.notes.common.Resource" />
 
         <variable
             name="state"
-            type="ru.gross.notes.common.State" />
+            type="ru.gross.notes.common.Resource" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
