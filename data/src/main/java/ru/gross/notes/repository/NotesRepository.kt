@@ -21,4 +21,9 @@ interface NotesRepository : Repository {
      * Возвращает список заметок.
      */
     fun getAll(): Flow<Resource<List<Note>?>>
+
+    /**
+     * Обновляет информацию в заметке.
+     */
+    fun update(id: String?, title: String?, content: String?)
 }

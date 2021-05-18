@@ -23,11 +23,11 @@ data class Note(
      * Заголовок заметки.
      */
     @JvmField
-    var title: CharSequence? = null,
+    var title: String? = null,
 
     /**
      * Текст заметки.
      */
     @JvmField
-    var content: CharSequence? = null
+    var content: String? = null
 )

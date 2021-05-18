@@ -1,16 +1,19 @@
 package ru.gross.notes.ui.detail
 
 import androidx.lifecycle.*
-import ru.gross.notes.interactors.DisplayNoteDetail
 import ru.gross.notes.common.Resource
-import ru.gross.notes.common.mapResource
-import ru.gross.notes.mapper.NoteDetailMapper
+import ru.gross.notes.common.mapResourceFlow
+import ru.gross.notes.common.value
+import ru.gross.notes.interactors.DisplayNoteDetail
+import ru.gross.notes.interactors.UpdateNote
+import ru.gross.notes.mapper.NoteDetailViewMapper
 import javax.inject.Inject
 
 class NoteDetailsViewModel(
     noteId: String,
+    noteDetailMapper: NoteDetailViewMapper,
     displayNoteDetail: DisplayNoteDetail,
-    noteDetailMapper: NoteDetailMapper
+    private val updateNote: UpdateNote
 ) : ViewModel() {
 
     /**
@@ -18,12 +21,24 @@ class NoteDetailsViewModel(
      */
     val details: LiveData<Resource<NoteDetailView?>> =
         displayNoteDetail(noteId)
-            .mapResource(noteDetailMapper::apply)
+            .mapResourceFlow(noteDetailMapper::apply)
             .asLiveData(viewModelScope.coroutineContext)
+
+    /**
+     * Сохраняет изменения в заметке.
+     */
+    fun saveChanges() {
+        details.value?.value?.let {
+            updateNote(
+                UpdateNote.Args(it.id, it.title, it.content)
+            )
+        }
+    }
 
     class Factory @Inject constructor(
         private val displayNoteDetail: DisplayNoteDetail,
-        private val noteDetailMapper: NoteDetailMapper
+        private val noteDetailMapper: NoteDetailViewMapper,
+        private val updateNote: UpdateNote
     ) : ViewModelProvider.Factory {
         private var noteId: String? = null
         fun setNoteId(noteId: String?) = apply { this.noteId = noteId }
@@ -33,8 +48,9 @@ class NoteDetailsViewModel(
             requireNotNull(noteId) { "Note id not set" }.let {
                 NoteDetailsViewModel(
                     it,
+                    noteDetailMapper,
                     displayNoteDetail,
-                    noteDetailMapper
+                    updateNote
                 ) as T
             }
     }

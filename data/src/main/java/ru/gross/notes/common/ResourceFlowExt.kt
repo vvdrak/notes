@@ -3,7 +3,7 @@ package ru.gross.notes.common
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-inline fun <T, R> Flow<Resource<T>>.mapResource(crossinline transform: (value: T?) -> R) =
+inline fun <T, R> Flow<Resource<T>>.mapResourceFlow(crossinline transform: (value: T?) -> R) =
     map { it.map(transform) }
 
 /**

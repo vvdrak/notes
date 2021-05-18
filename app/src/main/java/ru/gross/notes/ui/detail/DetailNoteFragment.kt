@@ -7,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ru.gross.notes.R
 import ru.gross.notes.common.BaseFragment
 import ru.gross.notes.common.handle
 import ru.gross.notes.databinding.FragmentNoteDetailCardBinding
 import ru.gross.notes.notesComponent
+import ru.gross.notes.utils.addBackPressedCallback
+import ru.gross.notes.utils.navigateUp
 import javax.inject.Inject
 
 class DetailNoteFragment : BaseFragment<FragmentNoteDetailCardBinding>(R.layout.fragment_note_detail_card) {
@@ -25,6 +28,7 @@ class DetailNoteFragment : BaseFragment<FragmentNoteDetailCardBinding>(R.layout.
     override fun onAttach(context: Context) {
         super.onAttach(context)
         notesComponent().inject(this)
+        addBackPressedCallback(this, action = ::saveInternal)
     }
 
     override fun onCreateView(
@@ -33,6 +37,7 @@ class DetailNoteFragment : BaseFragment<FragmentNoteDetailCardBinding>(R.layout.
         savedInstanceState: Bundle?
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
+        binding.editable = true
         ViewCompat.setTransitionName(binding.rootPane, args.noteId)
         return view
     }
@@ -45,5 +50,10 @@ class DetailNoteFragment : BaseFragment<FragmentNoteDetailCardBinding>(R.layout.
                 state.handle(successHandler = ::setNote, errorHandler = ::handleError)
             }
         }
+    }
+
+    private fun saveInternal() {
+        viewModel.saveChanges()
+        navigateUp(findNavController())
     }
 }

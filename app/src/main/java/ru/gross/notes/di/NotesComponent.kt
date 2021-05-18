@@ -8,7 +8,7 @@ import dagger.multibindings.IntoMap
 import ru.gross.notes.db.AppDatabase
 import ru.gross.notes.interactors.*
 import ru.gross.notes.mapper.Mapper
-import ru.gross.notes.mapper.NoteDetailMapper
+import ru.gross.notes.mapper.NoteDetailViewMapper
 import ru.gross.notes.mapper.NoteEntityMapper
 import ru.gross.notes.mapper.NoteViewMapper
 import ru.gross.notes.navigation.Navigator
@@ -62,10 +62,13 @@ interface NotesComponent {
         fun bindDisplayNoteDetail(impl: DisplayNoteDetailImpl): DisplayNoteDetail
 
         @Binds
+        fun bindUpdateNote(impl: UpdateNoteImpl): UpdateNote
+
+        @Binds
         fun bindShareNote(impl: ShareNoteImpl): ShareNote
 
         @Binds
-        fun bindNoteDetailMapper(impl: NoteDetailMapper): Mapper<*, *>
+        fun bindNoteDetailMapper(impl: NoteDetailViewMapper): Mapper<*, *>
 
         @Binds
         fun provideNoteMapper(impl: NoteViewMapper): Mapper<*, *>

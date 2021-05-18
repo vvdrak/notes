@@ -18,16 +18,20 @@ class NotesRepositoryImpl @Inject constructor(
     private val entityMapper: NoteEntityMapper
 ) : NotesRepository {
     override fun getById(id: String): Flow<Resource<Note?>> = resourceFlow {
-        val source = dao.getById(id)
+        val source = dao.getByIdSuspend(id)
             .run(entityMapper::apply)
             .asResource()
         emit(source)
     }
 
     override fun getAll(): Flow<Resource<List<Note>?>> = resourceFlow {
-        val source = dao.getAll()
+        val source = dao.getNotesSuspend()
             .mapNotNull(entityMapper::apply)
             .asResource()
         emit(source)
+    }
+
+    override fun update(id: String?, title: String?, content: String?) = execute {
+        dao.updateWithTransaction(id, title, content)
     }
 }

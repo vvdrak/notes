@@ -33,7 +33,13 @@ class MainActivity : AppCompatActivity() {
             lifecycleOwner = this@MainActivity
             title = viewModel.title
             fab.setOnClickListener { displayStubMessage() }
-            toolbar.setNavigationOnClickListener { navigateUp(navController) }
+            toolbar.setNavigationOnClickListener {
+                if (onBackPressedDispatcher.hasEnabledCallbacks()) {
+                    onBackPressedDispatcher.onBackPressed()
+                } else {
+                    navigateUp(navController)
+                }
+            }
             bottomBar.setNavigationOnClickListener { displayStubMessage() }
             bottomBar.setOnMenuItemClickListener {
                 when (it.itemId) {
