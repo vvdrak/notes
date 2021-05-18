@@ -32,13 +32,19 @@ private object ResExtension {
 }
 
 /**
- * Возвращает строку из ресурсов проекта ассоциированную с [resId].
+ * Возвращает изображение из ресурсов проекта ассоциированную с [resId].
  */
-fun Activity.drawableResource(@DrawableRes resId: Int) =
+fun Context.drawableResource(@DrawableRes resId: Int) =
     ResExtension.drawableResource(this, resId)
 
 /**
- * Возвращает изображение из ресурсов проекта ассоциированное с [resId].
+ * Возвращает строку из ресурсов проекта ассоциированную с [resId].
+ */
+fun Context.stringResource(@StringRes resId: Int) =
+    ResExtension.stringResource(this, resId)
+
+/**
+ * Возвращает строку из ресурсов проекта ассоциированное с [resId].
  */
 fun AndroidViewModel.stringResource(@StringRes resId: Int) =
     ResExtension.stringResource(getApplication(), resId)

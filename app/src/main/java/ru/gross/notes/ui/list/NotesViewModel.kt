@@ -7,12 +7,12 @@ import androidx.lifecycle.viewModelScope
 import ru.gross.notes.common.State
 import ru.gross.notes.common.mapState
 import ru.gross.notes.interactors.DisplayNotes
-import ru.gross.notes.mapper.NoteMapper
+import ru.gross.notes.mapper.NoteViewMapper
 import javax.inject.Inject
 
 class NotesViewModel @Inject constructor(
     displayNotes: DisplayNotes,
-    mapNote: NoteMapper
+    mapNote: NoteViewMapper
 ) : ViewModel() {
 
     /**

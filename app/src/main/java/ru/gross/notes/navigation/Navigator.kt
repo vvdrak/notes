@@ -45,11 +45,12 @@ class NavigatorImpl @Inject constructor() : Navigator {
     }
 
     override fun showNoteDetail(activity: FragmentActivity, view: View, viewState: NoteView) {
+        val id = requireNotNull(viewState.id) { "Note id not set" }
         val transitionName = ViewCompat.getTransitionName(view)
         val extras = if (transitionName != null) FragmentNavigatorExtras(view to transitionName) else null
         navigate(
             activity.findNavController(R.id.nav_host_fragment),
-            DisplayNotesFragmentDirections.toNoteCard(viewState),
+            DisplayNotesFragmentDirections.toNoteCard(id),
             navExtras = extras
         )
     }

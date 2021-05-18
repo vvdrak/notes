@@ -5,14 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.*
 import dagger.multibindings.IntoMap
+import ru.gross.notes.db.AppDatabase
 import ru.gross.notes.interactors.*
 import ru.gross.notes.mapper.Mapper
 import ru.gross.notes.mapper.NoteDetailMapper
-import ru.gross.notes.mapper.NoteMapper
+import ru.gross.notes.mapper.NoteEntityMapper
+import ru.gross.notes.mapper.NoteViewMapper
 import ru.gross.notes.navigation.Navigator
 import ru.gross.notes.navigation.NavigatorImpl
 import ru.gross.notes.repository.NotesRepository
-import ru.gross.notes.repository.NotesRepositoryStub
+import ru.gross.notes.repository.NotesRepositoryImpl
 import ru.gross.notes.ui.MainActivity
 import ru.gross.notes.ui.MainViewModel
 import ru.gross.notes.ui.detail.DetailNoteFragment
@@ -27,7 +29,7 @@ import javax.inject.Singleton
  * @author gross_va
  */
 @Singleton
-@Component(modules = [NotesComponent.MainModule::class, NotesComponent.UIModule::class])
+@Component(modules = [NotesComponent.PersistModule::class, NotesComponent.MainModule::class, NotesComponent.UIModule::class])
 interface NotesComponent {
     @Component.Factory
     interface Factory {
@@ -51,10 +53,10 @@ interface NotesComponent {
         fun bindNavigator(impl: NavigatorImpl): Navigator
 
         @Binds
-        fun bindNotesRepository(impl: NotesRepositoryStub): NotesRepository
+        fun bindNotesRepository(impl: NotesRepositoryImpl): NotesRepository
 
         @Binds
-        fun bindDisplayNotes(impl: DisplayNoteImpl): DisplayNotes
+        fun bindDisplayNotes(impl: DisplayNotesImpl): DisplayNotes
 
         @Binds
         fun bindDisplayNoteDetail(impl: DisplayNoteDetailImpl): DisplayNoteDetail
@@ -66,7 +68,10 @@ interface NotesComponent {
         fun bindNoteDetailMapper(impl: NoteDetailMapper): Mapper<*, *>
 
         @Binds
-        fun provideNoteMapper(impl: NoteMapper): Mapper<*, *>
+        fun provideNoteMapper(impl: NoteViewMapper): Mapper<*, *>
+
+        @Binds
+        fun provideNoteEntityMapper(impl: NoteEntityMapper): Mapper<*, *>
 
         @Binds
         @IntoMap
@@ -88,5 +93,20 @@ interface NotesComponent {
         @JvmStatic
         @Provides
         fun provideNoteAdapter(): NotesAdapter = NotesAdapter()
+    }
+
+    @Module
+    object PersistModule {
+
+        @JvmStatic
+        @Provides
+        @Singleton
+        fun provideDatabase(application: Application) =
+            AppDatabase.getInstance(application, "notes.v1.dev")
+
+        @JvmStatic
+        @Provides
+        @Singleton
+        fun provideNotesDao(database: AppDatabase) = database.notesDao()
     }
 }

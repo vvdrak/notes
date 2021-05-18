@@ -19,7 +19,7 @@
         android:name="ru.gross.notes.ui.detail.DetailNoteFragment"
         tools:layout="@layout/fragment_note_detail_card">
         <argument
-            android:name="note"
-            app:argType="ru.gross.notes.ui.list.NoteView" />
+            android:name="noteId"
+            app:argType="string" />
     </fragment>
 </navigation>

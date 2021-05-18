@@ -14,14 +14,14 @@ import ru.gross.notes.common.State
  * @param T Тип данных.
  * @author vva2@gelicon.biz
  */
-fun <T> Repository.remoteFlow(
+fun <T> Repository.stateFlow(
     delay: Long = 500L,
     block: suspend FlowCollector<State<T>>.() -> Unit
 ): Flow<State<T>> {
     return flow(block)
         .onStart { emit(State.Loading(delay)) }
         .catch {
-            Log.e(this@remoteFlow::class.simpleName, "Handle error", it)
+            Log.e(this@stateFlow::class.simpleName, "Handle error", it)
             emit(State.Error(it.message))
         }
         .flowOn(Dispatchers.IO)

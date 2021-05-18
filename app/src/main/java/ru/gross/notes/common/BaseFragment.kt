@@ -24,7 +24,7 @@ abstract class BaseFragment<VB : ViewDataBinding>(
     ): View? = binding.root
 
     protected fun handleError(message: CharSequence?) {
-        message?.let { Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT) }
+        message?.let { Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show() }
     }
 }
 

@@ -18,7 +18,8 @@ import javax.inject.Inject
 class DetailNoteFragment : BaseFragment<FragmentNoteDetailCardBinding>(R.layout.fragment_note_detail_card) {
     @Inject
     lateinit var factory: NoteDetailsViewModel.Factory
-    private val viewModel: NoteDetailsViewModel by viewModels { factory.setNoteId(args.note.id) }
+
+    private val viewModel: NoteDetailsViewModel by viewModels { factory.setNoteId(args.noteId) }
     private val args: DetailNoteFragmentArgs by navArgs()
 
     override fun onAttach(context: Context) {
@@ -32,7 +33,7 @@ class DetailNoteFragment : BaseFragment<FragmentNoteDetailCardBinding>(R.layout.
         savedInstanceState: Bundle?
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
-        ViewCompat.setTransitionName(binding.rootPane, args.note.id)
+        ViewCompat.setTransitionName(binding.rootPane, args.noteId)
         return view
     }
 
