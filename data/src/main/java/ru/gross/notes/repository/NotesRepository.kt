@@ -13,9 +13,10 @@ interface NotesRepository : Repository {
 
     /**
      * Возвращает [заметку][Note] по ее идентификатору.
+     * В случае передачи *null* фернет пустой объект для добавления.
      * @param id Идентификтаор заметки.
      */
-    fun getById(id: String): Flow<Resource<Note?>>
+    fun getById(id: String?): Flow<Resource<Note?>>
 
     /**
      * Возвращает список заметок.

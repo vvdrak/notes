@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ru.gross.notes.R
 import ru.gross.notes.common.BaseFragment
 import ru.gross.notes.common.handle
@@ -18,7 +19,8 @@ import ru.gross.notes.utils.addBackPressedCallback
 import ru.gross.notes.utils.navigateUp
 import javax.inject.Inject
 
-class DetailNoteFragment : BaseFragment<FragmentNoteDetailCardBinding>(R.layout.fragment_note_detail_card) {
+class DetailNoteFragment :
+    BaseFragment<FragmentNoteDetailCardBinding>(R.layout.fragment_note_detail_card) {
     @Inject
     lateinit var factory: NoteDetailsViewModel.Factory
 
@@ -53,7 +55,33 @@ class DetailNoteFragment : BaseFragment<FragmentNoteDetailCardBinding>(R.layout.
     }
 
     private fun saveInternal() {
-        viewModel.saveChanges()
-        navigateUp(findNavController())
+        val note = binding.note ?: return
+        val navController = findNavController()
+
+        fun save() {
+            viewModel.saveChanges()
+            navigateUp(navController)
+        }
+
+        fun up() {
+            navigateUp(navController)
+        }
+
+        val filled = note.isFilled
+        if (!filled) {
+            up()
+            return
+        }
+
+        if (args.noteId == null && filled) {
+            MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_AppTheme_Dialog)
+                .setTitle(R.string.add_note_confirmation_title)
+                .setCancelable(false)
+                .setPositiveButton(R.string.default_confirm_btn_text) { _, _ -> save() }
+                .setNegativeButton(R.string.default_negative_btn_text) { _, _ -> up() }
+                .show()
+        } else {
+            save()
+        }
     }
 }

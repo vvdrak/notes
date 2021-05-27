@@ -1,9 +1,7 @@
 package ru.gross.notes.db
 
-import androidx.room.Dao
-import androidx.room.Query
-import androidx.room.Transaction
-import androidx.room.Update
+import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 import ru.gross.notes.db.entity.NoteEntity
 import java.util.*
 
@@ -16,10 +14,10 @@ import java.util.*
 abstract class NotesDao {
 
     /**
-     * Возвращает список заметок.
+     * Возвращает список заметок в формате Hot Flow.
      */
-    @Query("SELECT * FROM note_table")
-    abstract suspend fun getNotesSuspend(): List<NoteEntity>
+    @Query("SELECT * FROM note_table ORDER BY note_creation_date")
+    abstract fun getNotes(): Flow<List<NoteEntity>>
 
     /**
      * Возвращает [заметку][NoteEntity] по ее идентификатору.
@@ -28,11 +26,15 @@ abstract class NotesDao {
     @Query("SELECT * FROM note_table WHERE note_id = :id")
     abstract suspend fun getByIdSuspend(id: String): NoteEntity?
 
-    @Update(entity = NoteEntity::class)
+    /**
+     * Обновляет информацию в заметке [entity].
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun updateSuspend(entity: NoteEntity)
 
     /**
-     * Обновляет информацию в заметке.
+     * Обновляет [title] и [content] в заметке с идентификатором [id].
+     * В случае отсутствия заметки с идентификаторм [id] будет добавлена новая заметка.
      */
     @Transaction
     open suspend fun updateWithTransaction(

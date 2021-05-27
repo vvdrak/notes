@@ -10,6 +10,7 @@ import ru.gross.notes.databinding.ActivityMainBinding
 import ru.gross.notes.di.InjectableViewModelFactory
 import ru.gross.notes.navigation.Navigator
 import ru.gross.notes.notesComponent
+import ru.gross.notes.ui.detail.DetailNoteFragmentArgs
 import ru.gross.notes.utils.drawableResource
 import ru.gross.notes.utils.navigateUp
 import javax.inject.Inject
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             lifecycleOwner = this@MainActivity
             title = viewModel.title
-            fab.setOnClickListener { displayStubMessage() }
+            fab.setOnClickListener { navigator.showAddNote(this@MainActivity) }
             toolbar.setNavigationOnClickListener {
                 if (onBackPressedDispatcher.hasEnabledCallbacks()) {
                     onBackPressedDispatcher.onBackPressed()
@@ -47,18 +48,29 @@ class MainActivity : AppCompatActivity() {
                         displayStubMessage()
                         return@setOnMenuItemClickListener true
                     }
+                    R.id.action_delete -> {
+                        displayStubMessage()
+                        return@setOnMenuItemClickListener true
+                    }
                     else -> return@setOnMenuItemClickListener false
                 }
             }
         }
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, a ->
             when (destination.id) {
                 R.id.navigation_detail_note -> {
                     binding.fab.hide()
                     binding.toolbar.navigationIcon = drawableResource(R.drawable.ic_arrow_back_24px)
                     binding.bottomBar.navigationIcon = null
-                    binding.bottomBar.replaceMenu(R.menu.detail_note_menu)
+                    val args = DetailNoteFragmentArgs.fromBundle(
+                        a ?: return@addOnDestinationChangedListener
+                    )
+                    if (args.noteId != null) {
+                        binding.bottomBar.replaceMenu(R.menu.detail_note_menu)
+                    } else {
+                        binding.bottomBar.menu.clear()
+                    }
                 }
                 else -> {
                     binding.fab.show()

@@ -11,6 +11,9 @@ import androidx.lifecycle.LifecycleOwner
 val Fragment.onBackPressedDispatcher: OnBackPressedDispatcher
     get() = requireActivity().onBackPressedDispatcher
 
+/**
+ *
+ */
 fun Fragment.addBackPressedCallback(
     owner: LifecycleOwner? = null,
     enabled: Boolean = true,

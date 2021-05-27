@@ -28,4 +28,11 @@ class NoteDetailView(
      */
     @JvmField
     var content: String? = null
-) : Parcelable
+) : Parcelable {
+
+    /**
+     * Возвращает флаг заполненности заметки.
+     */
+    val isFilled: Boolean
+        get() = id != null || creationDate != null || title != null || content != null
+}

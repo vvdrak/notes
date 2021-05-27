@@ -8,11 +8,16 @@
     <fragment
         android:id="@+id/navigation_display_notes"
         android:name="ru.gross.notes.ui.list.DisplayNotesFragment"
-        tools:layout="@layout/fragment_display_notes">
-        <action
-            android:id="@+id/toNoteCard"
-            app:destination="@id/navigation_detail_note" />
-    </fragment>
+        tools:layout="@layout/fragment_display_notes" />
+
+    <action
+        android:id="@+id/toNoteCard"
+        app:destination="@id/navigation_detail_note">
+        <argument
+            android:name="noteId"
+            app:argType="string"
+            app:nullable="true" />
+    </action>
 
     <fragment
         android:id="@+id/navigation_detail_note"
@@ -20,6 +25,7 @@
         tools:layout="@layout/fragment_note_detail_card">
         <argument
             android:name="noteId"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

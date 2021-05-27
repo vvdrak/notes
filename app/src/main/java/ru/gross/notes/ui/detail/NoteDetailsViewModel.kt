@@ -10,7 +10,7 @@ import ru.gross.notes.mapper.NoteDetailViewMapper
 import javax.inject.Inject
 
 class NoteDetailsViewModel(
-    noteId: String,
+    noteId: String?,
     noteDetailMapper: NoteDetailViewMapper,
     displayNoteDetail: DisplayNoteDetail,
     private val updateNote: UpdateNote
@@ -29,9 +29,8 @@ class NoteDetailsViewModel(
      */
     fun saveChanges() {
         details.value?.value?.let {
-            updateNote(
-                UpdateNote.Args(it.id, it.title, it.content)
-            )
+            val args = UpdateNote.Args(it.id, it.title, it.content)
+            updateNote(args)
         }
     }
 
@@ -45,13 +44,11 @@ class NoteDetailsViewModel(
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            requireNotNull(noteId) { "Note id not set" }.let {
-                NoteDetailsViewModel(
-                    it,
-                    noteDetailMapper,
-                    displayNoteDetail,
-                    updateNote
-                ) as T
-            }
+            NoteDetailsViewModel(
+                noteId,
+                noteDetailMapper,
+                displayNoteDetail,
+                updateNote
+            ) as T
     }
 }
