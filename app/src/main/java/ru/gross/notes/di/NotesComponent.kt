@@ -68,6 +68,9 @@ interface NotesComponent {
         fun bindShareNote(impl: ShareNoteImpl): ShareNote
 
         @Binds
+        fun bindDeleteNote(impl: DeleteNoteImpl): DeleteNote
+
+        @Binds
         fun bindNoteDetailMapper(impl: NoteDetailViewMapper): Mapper<*, *>
 
         @Binds
@@ -93,7 +96,6 @@ interface NotesComponent {
     @Module
     object UIModule {
 
-        @JvmStatic
         @Provides
         fun provideNoteAdapter(): NotesAdapter = NotesAdapter()
     }
@@ -101,13 +103,11 @@ interface NotesComponent {
     @Module
     object PersistModule {
 
-        @JvmStatic
         @Provides
         @Singleton
         fun provideDatabase(application: Application) =
             AppDatabase.getInstance(application, "notes.v1.dev")
 
-        @JvmStatic
         @Provides
         @Singleton
         fun provideNotesDao(database: AppDatabase) = database.notesDao()

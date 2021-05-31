@@ -1,7 +1,5 @@
 package ru.gross.notes.navigation
 
-import android.content.Context
-import android.content.Intent
 import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentActivity
@@ -18,12 +16,6 @@ import javax.inject.Inject
  * @author gross_va
  */
 interface Navigator {
-    /**
-     * Оттправляет текстовое содержимое в другие приложения.
-     * @param context Контекст приложения.
-     * @param text Текст, отправляемый в другие приложения.
-     */
-    fun shareText(context: Context, text: String)
 
     /**
      * Отображает детальную информацию о заметке.
@@ -41,14 +33,6 @@ interface Navigator {
 }
 
 class NavigatorImpl @Inject constructor() : Navigator {
-
-    override fun shareText(context: Context, text: String) {
-        val sendIntent = Intent(Intent.ACTION_SEND).apply {
-            putExtra(Intent.EXTRA_TEXT, text)
-            type = "text/plain"
-        }
-        context.startActivity(Intent.createChooser(sendIntent, null))
-    }
 
     override fun showNoteDetail(activity: FragmentActivity, view: View, viewState: NoteView) {
         val id = requireNotNull(viewState.id) { "Note id not set" }

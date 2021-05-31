@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.dataBindings
 import androidx.navigation.findNavController
 import ru.gross.notes.R
+import ru.gross.notes.common.BaseFragment
 import ru.gross.notes.databinding.ActivityMainBinding
 import ru.gross.notes.di.InjectableViewModelFactory
 import ru.gross.notes.navigation.Navigator
 import ru.gross.notes.notesComponent
 import ru.gross.notes.ui.detail.DetailNoteFragmentArgs
+import ru.gross.notes.utils.currentFragment
 import ru.gross.notes.utils.drawableResource
 import ru.gross.notes.utils.navigateUp
 import javax.inject.Inject
@@ -45,11 +47,11 @@ class MainActivity : AppCompatActivity() {
             bottomBar.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_share -> {
-                        displayStubMessage()
+                        currentFragment().share()
                         return@setOnMenuItemClickListener true
                     }
                     R.id.action_delete -> {
-                        displayStubMessage()
+                        currentFragment().delete()
                         return@setOnMenuItemClickListener true
                     }
                     else -> return@setOnMenuItemClickListener false
@@ -80,5 +82,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun currentFragment(): BaseFragment<*> {
+        return currentFragment(R.id.nav_host_fragment) as? BaseFragment<*>
+            ?: throw IllegalStateException("Current fragment not displayed")
     }
 }

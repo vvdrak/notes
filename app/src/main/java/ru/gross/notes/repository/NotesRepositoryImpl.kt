@@ -37,4 +37,8 @@ class NotesRepositoryImpl @Inject constructor(
     override fun update(id: String?, title: String?, content: String?) = execute {
         dao.updateWithTransaction(id, title, content)
     }
+
+    override fun remove(id: String) = execute {
+        dao.remove(id)
+    }
 }

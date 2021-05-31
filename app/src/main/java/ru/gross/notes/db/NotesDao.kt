@@ -48,6 +48,12 @@ abstract class NotesDao {
         updateSuspend(note)
     }
 
+    /**
+     * Удаляет заметку с идентификатором [id]
+     */
+    @Query("DELETE FROM note_table WHERE note_id = :id")
+    abstract suspend fun remove(id: String)
+
     private companion object {
         @JvmStatic
         fun newId(): String = UUID.randomUUID().toString()

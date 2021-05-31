@@ -3,6 +3,7 @@ package ru.gross.notes.ui.list
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels

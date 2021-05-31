@@ -26,5 +26,9 @@ abstract class BaseFragment<VB : ViewDataBinding>(
     protected fun handleError(message: CharSequence?) {
         message?.let { Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show() }
     }
+
+    open fun share() = Unit
+
+    open fun delete() = Unit
 }
 

@@ -7,6 +7,10 @@
 
         <import type="ru.gross.notes.ui.list.NoteView" />
 
+        <import
+            alias="conv"
+            type="ru.gross.notes.binding.BaseViewConverter" />
+
         <variable
             name="item"
             type="NoteView" />
@@ -32,6 +36,7 @@
                 android:maxLines="3"
                 android:text="@{item.title}"
                 android:textAppearance="?attr/textAppearanceBody1"
+                android:visibility="@{conv.otherwiseGone(conv.isNotNullOrEmpty(item.title)), default=visible}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -46,9 +51,11 @@
                 android:maxLines="6"
                 android:text="@{item.content}"
                 android:textAppearance="?attr/textAppearanceBody2"
+                android:visibility="@{conv.otherwiseGone(conv.isNotNullOrEmpty(item.content)), default=visible}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/note_title_holder"
+                app:layout_goneMarginTop="0dp"
                 tools:text="@tools:sample/lorem/random" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ru.gross.notes.R
@@ -54,17 +53,33 @@ class DetailNoteFragment :
         }
     }
 
+    override fun share() {
+        viewModel.shareIt()
+    }
+
+    override fun delete() {
+        MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_AppTheme_Dialog)
+            .setTitle(R.string.delete_note_confirmation_title)
+            .setPositiveButton(R.string.default_confirm_btn_text) { _, _ -> deleteInternal() }
+            .setNegativeButton(R.string.default_negative_btn_text) { _, _ -> }
+            .show()
+    }
+
+    private fun deleteInternal() {
+        viewModel.deleteIt()
+        navigateUp()
+    }
+
     private fun saveInternal() {
         val note = binding.note ?: return
-        val navController = findNavController()
 
         fun save() {
             viewModel.saveChanges()
-            navigateUp(navController)
+            navigateUp()
         }
 
         fun up() {
-            navigateUp(navController)
+            navigateUp()
         }
 
         val filled = note.isFilled
@@ -76,7 +91,6 @@ class DetailNoteFragment :
         if (args.noteId == null && filled) {
             MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_AppTheme_Dialog)
                 .setTitle(R.string.add_note_confirmation_title)
-                .setCancelable(false)
                 .setPositiveButton(R.string.default_confirm_btn_text) { _, _ -> save() }
                 .setNegativeButton(R.string.default_negative_btn_text) { _, _ -> up() }
                 .show()

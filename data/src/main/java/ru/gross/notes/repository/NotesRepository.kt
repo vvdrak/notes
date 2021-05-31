@@ -27,4 +27,9 @@ interface NotesRepository : Repository {
      * Обновляет информацию в заметке.
      */
     fun update(id: String?, title: String?, content: String?)
+
+    /**
+     * Удаляет [заметку][Note] с идентификатором [id]
+     */
+    fun remove(id: String)
 }

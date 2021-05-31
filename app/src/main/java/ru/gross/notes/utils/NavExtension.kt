@@ -1,12 +1,25 @@
 package ru.gross.notes.utils
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
-import androidx.navigation.*
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigator
 import androidx.navigation.fragment.findNavController
+
+
+/**
+ * Выполняет переход вверх по графику навигации.
+ *
+ * @author gross_va
+ */
+@MainThread
+fun Fragment.navigateUp() = navigateUp(findNavController())
 
 /**
  * Выполняет переход вверх по графику навигации.
@@ -53,4 +66,26 @@ private fun navigate(
     if (navController.currentDestination?.id != action?.destinationId) {
         navController.navigate(resId, args, navOptions, navExtras)
     }
+}
+
+/**
+ * Вовзращает текущий [фрагмент][Fragment] в рамках Jetpack Navigation.
+ * @param navHostId Идентификатор хоста.
+ * @param fragmentManagerProducer Функция извлечения [FragmentManager]
+ */
+private fun currentFragment(
+    @IdRes navHostId: Int,
+    fragmentManagerProducer: () -> FragmentManager
+): Fragment? {
+    return fragmentManagerProducer().findFragmentById(navHostId)
+        ?.childFragmentManager
+        ?.fragments
+        ?.get(0)
+}
+
+/**
+ * Возвращает текущий [фрагмент][Fragment], отображаемый на этой [активити][FragmentActivity]
+ */
+fun FragmentActivity.currentFragment(@IdRes navHostId: Int): Fragment? {
+    return currentFragment(navHostId) { supportFragmentManager }
 }

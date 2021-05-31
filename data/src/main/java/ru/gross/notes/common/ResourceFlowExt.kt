@@ -2,9 +2,19 @@ package ru.gross.notes.common
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 
+/**
+ * Выполняет преобразование данных в текущем [Flow] изменяя их и в ресурсе.
+ */
 inline fun <T, R> Flow<Resource<T>>.mapResourceFlow(crossinline transform: (value: T?) -> R) =
     map { it.map(transform) }
+
+/**
+ * Выполняет действие [action] в текущем [Flow] в случае, если экземпляр ресурса - [Resource.Success]
+ */
+inline fun <T> Flow<Resource<T>>.onSuccess(crossinline action: (T?) -> Unit) =
+    onEach { it.handle(successHandler = action) }
 
 /**
  * Возвращает значение экземпляра [Resource]

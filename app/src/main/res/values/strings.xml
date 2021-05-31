@@ -10,9 +10,10 @@
     <string name="title_edit">Редактировать</string>
     <string name="share_text">Поделиться</string>
     <string name="delete_text">Удалить</string>
-    <string name="transition_root">root transition animation</string>
     <string name="new_note_text">Новая заметка</string>
     <string name="add_note_confirmation_title">Сохранить изменения?</string>
     <string name="default_confirm_btn_text">Ок</string>
     <string name="default_negative_btn_text">Отмена</string>
+    <string name="delete_note_confirmation_title">Удалить заметку?</string>
+    <string name="share_note_mask">%1$s\n\n%2$s</string>
 </resources>
