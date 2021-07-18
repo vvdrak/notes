@@ -11,7 +11,7 @@ import javax.inject.Inject
  *
  * @author gross_va
  */
-interface DisplayNoteDetail : UseCase<String?, Flow<Resource<Note?>>>
+interface DisplayNoteDetail : UseCase<String?, Flow<Resource<Note>>>
 
 /**
  * Описывает реализацию варианта использования *Отображение подробной информации о заметке*.
@@ -21,5 +21,5 @@ interface DisplayNoteDetail : UseCase<String?, Flow<Resource<Note?>>>
 class DisplayNoteDetailImpl @Inject constructor(
     private val repository: NotesRepository
 ) : DisplayNoteDetail {
-    override fun invoke(args: String?): Flow<Resource<Note?>> = repository.getById(args)
+    override fun invoke(args: String?): Flow<Resource<Note>> = repository.getById(args)
 }

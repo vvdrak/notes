@@ -23,7 +23,7 @@ class NoteDetailsViewModel(
     /**
      * Детальная информация заметки.
      */
-    val details: LiveData<Resource<NoteDetailView?>> =
+    val details: LiveData<Resource<NoteDetailView>> =
         displayNoteDetail(noteId)
             .mapResourceFlow(noteDetailMapper::apply)
             .asLiveData(viewModelScope.coroutineContext)

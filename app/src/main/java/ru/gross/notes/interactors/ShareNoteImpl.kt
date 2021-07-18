@@ -25,7 +25,7 @@ class ShareNoteImpl @Inject constructor(
         val context = app
         notesRepository.getById(args.noteId)
             .onSuccess {
-                val text = it?.sharingContent(context) ?: return@onSuccess
+                val text = it.sharingContent(context)
                 ShareUtils.shareText(context, text)
             }
             .launchIn(args.scope)

@@ -19,6 +19,6 @@ class NotesViewModel @Inject constructor(
      * Список заметок.
      */
     val notes: LiveData<Resource<List<NoteView?>>> = displayNotes(null)
-        .mapResourceFlow { it?.map(mapNote::apply) ?: emptyList() }
+        .mapResourceFlow { it.map(mapNote::apply) }
         .asLiveData(viewModelScope.coroutineContext)
 }

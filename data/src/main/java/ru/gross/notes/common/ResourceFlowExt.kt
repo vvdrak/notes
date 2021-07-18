@@ -7,13 +7,13 @@ import kotlinx.coroutines.flow.onEach
 /**
  * Выполняет преобразование данных в текущем [Flow] изменяя их и в ресурсе.
  */
-inline fun <T, R> Flow<Resource<T>>.mapResourceFlow(crossinline transform: (value: T?) -> R) =
+inline fun <T, R> Flow<Resource<T>>.mapResourceFlow(crossinline transform: (value: T) -> R) =
     map { it.map(transform) }
 
 /**
  * Выполняет действие [action] в текущем [Flow] в случае, если экземпляр ресурса - [Resource.Success]
  */
-inline fun <T> Flow<Resource<T>>.onSuccess(crossinline action: (T?) -> Unit) =
+inline fun <T> Flow<Resource<T>>.onSuccess(crossinline action: (T) -> Unit) =
     onEach { it.handle(successHandler = action) }
 
 /**
@@ -42,7 +42,7 @@ fun <T> T.asResource(): Resource<T> = when (this) {
  * @param O Требуемый тип данных.
  * @author gross_va
  */
-inline fun <I, O> Resource<I>.map(crossinline transform: (I?) -> O): Resource<O> = when (this) {
+inline fun <I, O> Resource<I>.map(crossinline transform: (I) -> O): Resource<O> = when (this) {
     is Resource.Loading -> this
     is Resource.Success -> Resource.Success(transform(data))
     is Resource.Error -> this
@@ -72,7 +72,7 @@ inline fun <I, O> Resource<I>.switchMap(crossinline resourceSupplier: (I?) -> Re
  * @author gross_va
  */
 inline fun <T> Resource<T>.handle(
-    successHandler: (T?) -> Unit,
+    successHandler: (T) -> Unit,
     noinline loadingHandler: (() -> Unit)? = null,
     noinline errorHandler: ((String?) -> Unit)? = null
 ) {

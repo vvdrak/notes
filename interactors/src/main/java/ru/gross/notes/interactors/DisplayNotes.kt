@@ -11,7 +11,7 @@ import javax.inject.Inject
  *
  * @author gross_va
  */
-interface DisplayNotes : UseCase<Any?, Flow<Resource<List<Note>?>>>
+interface DisplayNotes : UseCase<Any?, Flow<Resource<List<Note>>>>
 
 /**
  * Описывает реализацию варианта использования *Отображение заметок*
@@ -21,5 +21,5 @@ interface DisplayNotes : UseCase<Any?, Flow<Resource<List<Note>?>>>
 class DisplayNotesImpl @Inject constructor(
     private val repository: NotesRepository
 ) : DisplayNotes {
-    override fun invoke(args: Any?): Flow<Resource<List<Note>?>> = repository.getAll()
+    override fun invoke(args: Any?): Flow<Resource<List<Note>>> = repository.getAll()
 }

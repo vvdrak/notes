@@ -21,7 +21,7 @@ sealed class Resource<out T> {
      * @param data Данные.
      * @param T Тип данных.
      */
-    data class Success<out T>(val data: T?) : Resource<T>()
+    data class Success<out T>(val data: T) : Resource<T>()
 
     /**
      * Состояние ошибки.
