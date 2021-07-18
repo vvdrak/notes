@@ -1,6 +1,8 @@
 package ru.gross.notes.ui.detail
 
 import androidx.lifecycle.*
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import ru.gross.notes.common.Resource
 import ru.gross.notes.common.mapResourceFlow
 import ru.gross.notes.common.value
@@ -9,9 +11,8 @@ import ru.gross.notes.interactors.DisplayNoteDetail
 import ru.gross.notes.interactors.ShareNote
 import ru.gross.notes.interactors.UpdateNote
 import ru.gross.notes.mapper.NoteDetailViewMapper
-import javax.inject.Inject
 
-class NoteDetailsViewModel(
+class NoteDetailsViewModel constructor(
     noteId: String?,
     noteDetailMapper: NoteDetailViewMapper,
     displayNoteDetail: DisplayNoteDetail,
@@ -54,19 +55,18 @@ class NoteDetailsViewModel(
             ?.let { deleteNote(it) }
     }
 
-    class Factory @Inject constructor(
+    class Factory @AssistedInject constructor(
+        @Assisted("noteId") private var noteId: String?,
         private val displayNoteDetail: DisplayNoteDetail,
         private val noteDetailMapper: NoteDetailViewMapper,
         private val updateNote: UpdateNote,
         private val shareNote: ShareNote,
         private val deleteNote: DeleteNote
     ) : ViewModelProvider.Factory {
-        private var noteId: String? = null
-        fun setNoteId(noteId: String?) = apply { this.noteId = noteId }
 
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            NoteDetailsViewModel(
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return NoteDetailsViewModel(
                 noteId,
                 noteDetailMapper,
                 displayNoteDetail,
@@ -74,5 +74,11 @@ class NoteDetailsViewModel(
                 shareNote,
                 deleteNote
             ) as T
+        }
+
+        @dagger.assisted.AssistedFactory
+        interface AssistedFactory {
+            fun create(@Assisted("noteId") noteId: String?): Factory
+        }
     }
 }

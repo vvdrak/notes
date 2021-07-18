@@ -9,26 +9,29 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import ru.gross.notes.R
 import ru.gross.notes.common.BaseFragment
 import ru.gross.notes.common.handle
 import ru.gross.notes.databinding.FragmentNoteDetailCardBinding
-import ru.gross.notes.notesComponent
 import ru.gross.notes.utils.addBackPressedCallback
 import ru.gross.notes.utils.navigateUp
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailNoteFragment :
     BaseFragment<FragmentNoteDetailCardBinding>(R.layout.fragment_note_detail_card) {
     @Inject
-    lateinit var factory: NoteDetailsViewModel.Factory
+    lateinit var factory: NoteDetailsViewModel.Factory.AssistedFactory
 
-    private val viewModel: NoteDetailsViewModel by viewModels { factory.setNoteId(args.noteId) }
+    private val viewModel: NoteDetailsViewModel by viewModels {
+        factory.create(args.noteId)
+    }
+
     private val args: DetailNoteFragmentArgs by navArgs()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        notesComponent().inject(this)
         addBackPressedCallback(this, action = ::saveInternal)
     }
 

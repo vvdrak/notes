@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ru.gross.notes.R
 import ru.gross.notes.common.Event
 import ru.gross.notes.common.asEvent
@@ -17,6 +18,7 @@ import javax.inject.Inject
  * Описывает главную [ViewModel] приложения.
  * @author gross_va
  */
+@HiltViewModel
 class MainViewModel @Inject constructor(
     application: Application,
 ) : AndroidViewModel(application) {

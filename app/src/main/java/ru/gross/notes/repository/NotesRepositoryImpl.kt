@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 class NotesRepositoryImpl @Inject constructor(
     private val dao: NotesDao,
-    private val entityMapper: NoteEntityMapper
+    private val entityMapper: NoteEntityMapper,
 ) : NotesRepository {
     override fun getById(id: String?): Flow<Resource<Note>> = resourceFlow {
         val source = id?.let {
