@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Notes.AppTheme">
+        android:theme="@style/Notes.AppTheme.DayNight">
         <activity
             android:name="ru.gross.notes.ui.MainActivity"
             android:exported="true">

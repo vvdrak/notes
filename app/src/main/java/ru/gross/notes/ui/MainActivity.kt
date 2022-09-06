@@ -3,8 +3,9 @@ package ru.gross.notes.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.dataBindings
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import ru.gross.notes.R
 import ru.gross.notes.common.BaseFragment
@@ -23,10 +24,15 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private val binding: ActivityMainBinding by dataBindings(R.layout.activity_main)
-    private val navController by lazy(mode = LazyThreadSafetyMode.NONE) { findNavController(R.id.nav_host_fragment) }
+    private val navController by lazy(mode = LazyThreadSafetyMode.NONE) {
+        (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        //WindowCompat.setDecorFitsSystemWindows(window, false)
 
         with(binding) {
             lifecycleOwner = this@MainActivity

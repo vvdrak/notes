@@ -21,40 +21,27 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:contentInsetStart="@dimen/toolbar_content_inset_start"
-                app:contentInsetStartWithNavigation="0dp">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/toolbar_content_inset_start"
-                    android:gravity="center_horizontal"
-                    android:text="@{title}"
-                    android:textAppearance="?textAppearanceHeadline6"
-                    tools:text="@string/app_name" />
-            </com.google.android.material.appbar.MaterialToolbar>
+                android:layout_height="?actionBarSize"
+                app:title="@{title}"
+                tools:title="@string/app_name" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            app:navGraph="@navigation/app_graph"
-            tools:ignore="FragmentTagUsage" />
+            app:navGraph="@navigation/app_graph" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fab"
-            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_note_text"
@@ -62,9 +49,8 @@
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottom_bar"
-            style="@style/Widget.MaterialComponents.BottomAppBar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/bottom_appbar_height"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:navigationIcon="@drawable/ic_menu_24px"
             tools:menu="@menu/bottom_appbar_menu" />
