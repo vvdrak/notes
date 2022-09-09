@@ -1,10 +1,11 @@
-package ru.gross.notes.mapper
+package ru.gross.notes.platform.mapper
 
-import ru.gross.notes.db.entity.NoteEntity
 import ru.gross.notes.domain.Note
+import ru.gross.notes.mapper.Mapper
+import ru.gross.notes.platform.db.entity.NoteEntity
 import javax.inject.Inject
 
-class NoteEntityMapper @Inject constructor() : Mapper<NoteEntity, Note> {
+internal class NoteEntityMapper @Inject constructor() : Mapper<NoteEntity, Note> {
     override fun invoke(input: NoteEntity): Note = input.let {
         Note(
             id = it.id,

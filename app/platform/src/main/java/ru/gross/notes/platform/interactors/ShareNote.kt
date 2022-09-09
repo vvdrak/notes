@@ -1,11 +1,11 @@
-package ru.gross.notes.interactors
+package ru.gross.notes.platform.interactors
 
 import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import ru.gross.notes.R
 import ru.gross.notes.common.handle
 import ru.gross.notes.domain.Note
+import ru.gross.notes.platform.R
 import ru.gross.notes.repository.NotesRepository
 import javax.inject.Inject
 

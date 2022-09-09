@@ -15,5 +15,4 @@
     <string name="default_confirm_btn_text">Ок</string>
     <string name="default_negative_btn_text">Отмена</string>
     <string name="delete_note_confirmation_title">Удалить заметку?</string>
-    <string name="share_note_mask">%1$s\n\n%2$s</string>
 </resources>

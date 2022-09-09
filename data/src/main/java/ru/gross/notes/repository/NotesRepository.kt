@@ -9,7 +9,7 @@ import ru.gross.notes.domain.Note
  *
  * @author gross_va
  */
-interface NotesRepository : Repository {
+interface NotesRepository {
 
     /**
      * Возвращает [заметку][Note] по ее идентификатору.

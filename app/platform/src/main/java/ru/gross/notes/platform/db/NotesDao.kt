@@ -1,8 +1,8 @@
-package ru.gross.notes.db
+package ru.gross.notes.platform.db
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import ru.gross.notes.db.entity.NoteEntity
+import ru.gross.notes.platform.db.entity.NoteEntity
 import java.util.*
 
 /**

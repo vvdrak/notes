@@ -11,6 +11,7 @@ import ru.gross.mvi.MviViewModel
 import ru.gross.notes.common.handle
 import ru.gross.notes.interactors.*
 import ru.gross.notes.mapper.NoteDetailViewMapper
+import ru.gross.notes.platform.interactors.ShareNote
 
 internal class NoteDetailsViewModel constructor(
     noteId: String?,

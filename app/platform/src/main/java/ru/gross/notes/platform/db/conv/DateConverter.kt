@@ -1,4 +1,4 @@
-package ru.gross.notes.db.conv
+package ru.gross.notes.platform.db.conv
 
 import androidx.room.TypeConverter
 import java.util.*

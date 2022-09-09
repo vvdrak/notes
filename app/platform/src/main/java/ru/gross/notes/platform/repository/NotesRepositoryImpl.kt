@@ -1,12 +1,13 @@
-package ru.gross.notes.repository
+package ru.gross.notes.platform.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.gross.notes.common.Resource
 import ru.gross.notes.common.asResource
-import ru.gross.notes.db.NotesDao
 import ru.gross.notes.domain.Note
-import ru.gross.notes.mapper.NoteEntityMapper
+import ru.gross.notes.platform.db.NotesDao
+import ru.gross.notes.platform.mapper.NoteEntityMapper
+import ru.gross.notes.repository.NotesRepository
 import javax.inject.Inject
 
 /**

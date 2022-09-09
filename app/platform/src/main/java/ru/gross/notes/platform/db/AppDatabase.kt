@@ -1,4 +1,4 @@
-package ru.gross.notes.db
+package ru.gross.notes.platform.db
 
 import android.content.Context
 import androidx.room.Database
@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import ru.gross.notes.db.conv.DateConverter
-import ru.gross.notes.db.entity.NoteEntity
+import ru.gross.notes.platform.db.conv.DateConverter
+import ru.gross.notes.platform.db.entity.NoteEntity
 
 /**
  * Описывает базу данных приложения.

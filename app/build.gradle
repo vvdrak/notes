@@ -49,6 +49,7 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':interactors')
     api project(path: ':app:mvi')
+    api project(path: ':app:platform')
 }
 
 // jetbrains
@@ -74,11 +75,6 @@ dependencies {
     // navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$versions.navigation"
-
-    // room
-    kapt "androidx.room:room-compiler:$versions.room"
-    implementation "androidx.room:room-runtime:$versions.room"
-    implementation "androidx.room:room-ktx:$versions.room"
 
     // ui
     implementation "androidx.appcompat:appcompat:$versions.appcompat"

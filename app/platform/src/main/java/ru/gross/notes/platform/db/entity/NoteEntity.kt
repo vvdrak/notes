@@ -1,4 +1,4 @@
-package ru.gross.notes.db.entity
+package ru.gross.notes.platform.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "note_table")
-data class NoteEntity(
+internal data class NoteEntity(
     /**
      * Идентификатор заметки.
      */
