@@ -19,29 +19,31 @@ interface Navigator {
      * @param activity Активити приложения.
      * @param viewState Объект модели представления, связанный с переходом на детальную информацию о заметке.
      */
-    fun showNoteDetail(activity: FragmentActivity, viewState: NoteView)
+    fun showNoteDetail(viewState: NoteView)
 
     /**
      * Отображает экран добавления заметки.
      * @param activity Активити приложения.
      */
-    fun showAddNote(activity: FragmentActivity)
+    fun showAddNote()
 }
 
-class NavigatorImpl @Inject constructor() : Navigator {
+class NavigatorImpl @Inject constructor(
+    private val activity: FragmentActivity
+) : Navigator {
 
-    override fun showNoteDetail(activity: FragmentActivity, viewState: NoteView) {
+    override fun showNoteDetail(viewState: NoteView) {
         val id = requireNotNull(viewState.id) { "Note id not set" }
         navigate(
-            activity.findNavController(R.id.nav_host_fragment),
-            DisplayNotesFragmentDirections.toNoteCard(id),
+            navController = activity.findNavController(R.id.nav_host_fragment),
+            direction = DisplayNotesFragmentDirections.toNoteCard(id),
         )
     }
 
-    override fun showAddNote(activity: FragmentActivity) {
+    override fun showAddNote() {
         navigate(
-            activity.findNavController(R.id.nav_host_fragment),
-            DisplayNotesFragmentDirections.toNoteCard(null),
+            navController = activity.findNavController(R.id.nav_host_fragment),
+            direction = DisplayNotesFragmentDirections.toNoteCard(null),
         )
     }
 }

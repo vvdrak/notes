@@ -78,7 +78,7 @@ internal class MainActivity : MviActivity<State, Effect>() {
 
     override fun handleViewEffect(effect: Effect) {
         when (effect) {
-            Effect.DisplayAddNote -> navigator.showAddNote(this@MainActivity)
+            Effect.DisplayAddNote -> navigator.showAddNote()
             Effect.NavigateBack -> {
                 if (onBackPressedDispatcher.hasEnabledCallbacks()) {
                     onBackPressedDispatcher.onBackPressed()

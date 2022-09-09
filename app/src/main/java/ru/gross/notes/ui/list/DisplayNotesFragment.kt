@@ -38,7 +38,7 @@ internal class DisplayNotesFragment : MviFragment<State, Effect>(R.layout.fragme
 
     override fun handleViewEffect(effect: Effect) {
         when (effect) {
-            is Effect.DisplayNote -> navigator.showNoteDetail(requireActivity(), effect.note)
+            is Effect.DisplayNote -> navigator.showNoteDetail(effect.note)
         }
     }
 
