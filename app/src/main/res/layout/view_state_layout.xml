@@ -5,20 +5,20 @@
 
     <data>
 
-        <import type="android.view.View" />
-
-        <import type="ru.gross.notes.common.Resource" />
+        <import
+            alias="conv"
+            type="ru.gross.notes.binding.BaseViewConverter" />
 
         <variable
-            name="state"
-            type="ru.gross.notes.common.Resource" />
+            name="isLoading"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?colorSurface"
-        android:visibility="@{state.isLoading() ? View.VISIBLE: View.GONE, default = gone}"
+        android:visibility="@{conv.otherwiseGone(isLoading), default = gone}"
         tools:visibility="visible">
 
         <ProgressBar

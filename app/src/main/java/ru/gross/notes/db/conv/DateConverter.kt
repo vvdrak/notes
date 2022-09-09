@@ -8,7 +8,7 @@ import java.util.*
  *
  * @author gross_va
  */
-object DateConverter {
+internal object DateConverter {
     @JvmStatic
     @TypeConverter
     fun toDate(timestamp: Long?): Date? = timestamp?.let { Date(it) }

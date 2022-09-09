@@ -12,7 +12,7 @@ import ru.gross.notes.interactors.*
 import ru.gross.notes.mapper.Mapper
 import ru.gross.notes.mapper.NoteDetailViewMapper
 import ru.gross.notes.mapper.NoteEntityMapper
-import ru.gross.notes.mapper.NoteViewMapper
+import ru.gross.notes.mapper.NoteViewListMapper
 import ru.gross.notes.navigation.Navigator
 import ru.gross.notes.navigation.NavigatorImpl
 import ru.gross.notes.repository.NotesRepository
@@ -26,7 +26,7 @@ import javax.inject.Singleton
  */
 @Module
 @InstallIn(SingletonComponent::class)
-interface MainModule {
+internal interface MainModule {
 
     @Binds
     fun bindNavigator(impl: NavigatorImpl): Navigator
@@ -44,6 +44,14 @@ interface MainModule {
     fun bindUpdateNote(impl: UpdateNoteImpl): UpdateNote
 
     @Binds
+    @Singleton
+    fun bindNotifyShareNote(impl: NotifyShareNoteImpl): NotifyShareNote
+
+    @Binds
+    @Singleton
+    fun bindNotifyDeleteNote(impl: NotifyDeleteNoteImpl): NotifyDeleteNote
+
+    @Binds
     fun bindShareNote(impl: ShareNoteImpl): ShareNote
 
     @Binds
@@ -53,7 +61,7 @@ interface MainModule {
     fun bindNoteDetailMapper(impl: NoteDetailViewMapper): Mapper<*, *>
 
     @Binds
-    fun provideNoteMapper(impl: NoteViewMapper): Mapper<*, *>
+    fun provideNoteMapper(impl: NoteViewListMapper): Mapper<*, *>
 
     @Binds
     fun provideNoteEntityMapper(impl: NoteEntityMapper): Mapper<*, *>
@@ -61,7 +69,7 @@ interface MainModule {
 
 @Module
 @InstallIn(FragmentComponent::class)
-object UIModule {
+internal object UIModule {
 
     @Provides
     fun provideNoteAdapter(): NotesAdapter = NotesAdapter()
@@ -69,7 +77,7 @@ object UIModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-object PersistModule {
+internal object PersistModule {
 
     @Provides
     @Singleton

@@ -7,11 +7,11 @@
 
     <data>
 
-        <import type="android.view.View" />
+        <import
+            alias="conv"
+            type="ru.gross.notes.binding.BaseViewConverter" />
 
         <import type="ru.gross.notes.ui.detail.NoteDetailView" />
-
-        <import type="ru.gross.notes.common.Resource" />
 
         <variable
             name="note"
@@ -22,8 +22,8 @@
             type="Boolean" />
 
         <variable
-            name="state"
-            type="ru.gross.notes.common.Resource" />
+            name="isLoading"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +36,7 @@
         <androidx.constraintlayout.widget.Group
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{state.isLoading() ? View.GONE: View.VISIBLE, default=gone}"
+            android:visibility="@{conv.otherwiseVisible(isLoading), default=gone}"
             app:constraint_referenced_ids="note_title_holder, note_content_holder"
             tools:visibility="visible" />
 
@@ -77,7 +77,7 @@
             layout="@layout/view_state_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            bind:state="@{state}"
+            bind:isLoading="@{isLoading}"
             tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

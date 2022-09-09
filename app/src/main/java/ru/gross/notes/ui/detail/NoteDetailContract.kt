@@ -2,7 +2,28 @@ package ru.gross.notes.ui.detail
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import ru.gross.mvi.ViewEffect
+import ru.gross.mvi.ViewEvent
+import ru.gross.mvi.ViewState
 import java.util.*
+
+internal sealed class State : ViewState {
+    object LoadDetail : State()
+    data class DisplayDetail(
+        val detail: NoteDetailView
+    ) : State()
+}
+
+internal sealed class Event : ViewEvent {
+    object DeleteNote : Event()
+    data class SaveChanges(val confirmed: Boolean) : Event()
+}
+
+internal sealed class Effect : ViewEffect {
+    object DisplayDeleteDialog : Effect()
+    object GoBack : Effect()
+    object DisplaySaveDialog : Effect()
+}
 
 @Parcelize
 class NoteDetailView(

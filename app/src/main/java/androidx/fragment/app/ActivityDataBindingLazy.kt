@@ -6,12 +6,12 @@ import androidx.annotation.MainThread
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-fun <VB : ViewDataBinding> ComponentActivity.dataBindings(
+internal fun <VB : ViewDataBinding> ComponentActivity.dataBindings(
     @LayoutRes layoutId: Int
 ): Lazy<VB> = createDataBindingLazy(layoutId)
 
 @MainThread
-fun <VB : ViewDataBinding> ComponentActivity.createDataBindingLazy(
+private fun <VB : ViewDataBinding> ComponentActivity.createDataBindingLazy(
     @LayoutRes layoutId: Int
 ): Lazy<VB> {
     val lifecycleProducer = { this }

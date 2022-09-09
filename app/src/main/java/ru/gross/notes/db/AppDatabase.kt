@@ -20,7 +20,7 @@ import ru.gross.notes.db.entity.NoteEntity
     exportSchema = false
 )
 @TypeConverters(value = [DateConverter::class])
-abstract class AppDatabase : RoomDatabase() {
+internal abstract class AppDatabase : RoomDatabase() {
 
     /**
      * Возвращает DAO сущности [NoteEntity]

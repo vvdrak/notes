@@ -1,17 +1,10 @@
 package ru.gross.notes.ui
 
-import android.app.Application
-import android.view.View
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ru.gross.notes.R
-import ru.gross.notes.common.Event
-import ru.gross.notes.common.asEvent
-import ru.gross.notes.ui.list.NoteView
-import ru.gross.notes.utils.stringResource
+import ru.gross.mvi.MviViewModel
+import ru.gross.notes.interactors.NotifyDeleteNote
+import ru.gross.notes.interactors.NotifyShareNote
 import javax.inject.Inject
 
 /**
@@ -19,32 +12,24 @@ import javax.inject.Inject
  * @author gross_va
  */
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    application: Application,
-) : AndroidViewModel(application) {
-    /**
-     * Заголовок приложения.
-     */
-    val title: LiveData<String> = MutableLiveData(stringResource(R.string.app_name))
+internal class MainViewModel @Inject constructor(
+    private val notifyDeleteNote: NotifyDeleteNote,
+    private val notifyShareNote: NotifyShareNote
+) : ru.gross.mvi.MviViewModel<State, Event, Effect>(State()) {
 
-    /**
-     * Текущая заметка, выбранная пользователем.
-     */
-    val current: LiveData<Event<Screen>> = MutableLiveData(Screen.LIST.asEvent())
-
-    /**
-     * Действие пользователя.
-     */
-    val userAction: LiveData<Event<Action>> = MutableLiveData()
-
-    /**
-     * Устанавливает переданный в аргументах [note] как основной.
-     * В случае, если [note] == `null`, основным станет новый экземпляр [NoteView]
-     */
-    fun setAsCurrent(view: View, note: NoteView?) {
-//        val content = NavMove(note ?: NoteView(), view)
-//        (current as MutableLiveData).value = content.asEvent()
-//        val titleRes = if (note == null) R.string.new_note_text else R.string.app_name
-//        (title as MutableLiveData).value = stringResource(titleRes)
+    override fun submitEvent(event: Event) {
+        when (event) {
+            Event.ClickEvent.AddNote -> postEffect(Effect.DisplayAddNote)
+            Event.ClickEvent.GoBack -> postEffect(Effect.NavigateBack)
+            Event.ClickEvent.DeleteNote -> notifyDeleteNote(Unit)
+            Event.ClickEvent.ShareNote -> notifyShareNote(Unit)
+            Event.ClickEvent.Menu -> postEffect(Effect.DisplayStub)
+            Event.ClickEvent.Search -> postEffect(Effect.DisplayStub)
+            is Event.SetCurrentScreen -> {
+                state = state.copy(
+                    screen = event.screen
+                )
+            }
+        }
     }
 }

@@ -3,8 +3,8 @@ package ru.gross.notes.binding.adapter
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import ru.gross.notes.common.DataBoundRecyclerAdapter
-import ru.gross.notes.common.DataBoundViewHolder
+import ru.gross.notes.binding.DataBoundRecyclerAdapter
+import ru.gross.notes.binding.DataBoundViewHolder
 
 /**
  * Адаптер привязки, позволяющий указать данные для адаптера через xml разметку.

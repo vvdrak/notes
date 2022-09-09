@@ -7,17 +7,17 @@
 
     <data>
 
-        <import type="android.view.View" />
+        <import
+            alias="conv"
+            type="ru.gross.notes.binding.BaseViewConverter" />
 
         <import type="ru.gross.notes.ui.list.NoteView" />
 
         <import type="java.util.List" />
 
-        <import type="ru.gross.notes.common.Resource" />
-
         <variable
-            name="state"
-            type="ru.gross.notes.common.Resource" />
+            name="isLoading"
+            type="Boolean" />
 
         <variable
             name="notes"
@@ -37,7 +37,7 @@
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:paddingBottom="80dp"
-            android:visibility="@{state.isLoading() ? View.GONE: View.VISIBLE, default=gone}"
+            android:visibility="@{conv.otherwiseVisible(isLoading), default=gone}"
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:spanCount="2"
             bind:itemsSource="@{notes}"
@@ -49,7 +49,7 @@
             layout="@layout/view_state_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            bind:state="@{state}"
+            bind:isLoading="@{isLoading}"
             tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

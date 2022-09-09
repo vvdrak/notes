@@ -8,7 +8,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 @MainThread
-fun <VB : ViewDataBinding> Fragment.dataBindings(
+internal fun <VB : ViewDataBinding> Fragment.dataBindings(
+    bindingProducer: (View) -> VB
+): Lazy<VB> = createDataBindingLazy {
+    bindingProducer(view ?: throw IllegalStateException("Root view can not be null"))
+}
+
+@MainThread
+internal fun <VB : ViewDataBinding> Fragment.dataBindings(
     rootProducer: () -> View? = { view }
 ): Lazy<VB> = createDataBindingLazy {
     val root = rootProducer() ?: throw IllegalStateException("Root view can not be null")
@@ -16,7 +23,7 @@ fun <VB : ViewDataBinding> Fragment.dataBindings(
 }
 
 @MainThread
-fun <VB : ViewDataBinding> Fragment.dataBindings(
+internal fun <VB : ViewDataBinding> Fragment.dataBindings(
     @LayoutRes layoutId: Int,
     parentProducer: () -> ViewGroup? = { mContainer }
 ): Lazy<VB> = createDataBindingLazy {
@@ -25,7 +32,7 @@ fun <VB : ViewDataBinding> Fragment.dataBindings(
 }
 
 @MainThread
-fun <VB : ViewDataBinding> Fragment.createDataBindingLazy(
+private fun <VB : ViewDataBinding> Fragment.createDataBindingLazy(
     dataBindingProducer: () -> VB
 ): Lazy<VB> {
     val lifecycleProducer = { viewLifecycleOwner }

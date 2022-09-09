@@ -11,7 +11,7 @@ import java.util.*
  * @author gross_va
  */
 @Dao
-abstract class NotesDao {
+internal abstract class NotesDao {
 
     /**
      * Возвращает список заметок в формате Hot Flow.

@@ -11,5 +11,5 @@ interface Mapper<in In, out Out> {
     /**
      * Выполняет преобразование из [In] в [Out].
      */
-    fun apply(input: In): Out
+    operator fun invoke(input: In): Out
 }

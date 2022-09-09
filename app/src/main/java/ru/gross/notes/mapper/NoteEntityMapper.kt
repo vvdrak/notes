@@ -4,8 +4,8 @@ import ru.gross.notes.db.entity.NoteEntity
 import ru.gross.notes.domain.Note
 import javax.inject.Inject
 
-class NoteEntityMapper @Inject constructor() : Mapper<NoteEntity?, Note?> {
-    override fun apply(input: NoteEntity?): Note? = input?.let {
+class NoteEntityMapper @Inject constructor() : Mapper<NoteEntity, Note> {
+    override fun invoke(input: NoteEntity): Note = input.let {
         Note(
             id = it.id,
             creationDate = it.creationDate,

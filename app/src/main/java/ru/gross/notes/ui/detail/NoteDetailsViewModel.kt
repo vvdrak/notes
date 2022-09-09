@@ -1,58 +1,71 @@
 package ru.gross.notes.ui.detail
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import ru.gross.notes.common.Resource
-import ru.gross.notes.common.mapResourceFlow
-import ru.gross.notes.common.value
-import ru.gross.notes.interactors.DeleteNote
-import ru.gross.notes.interactors.DisplayNoteDetail
-import ru.gross.notes.interactors.ShareNote
-import ru.gross.notes.interactors.UpdateNote
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import ru.gross.mvi.MviViewModel
+import ru.gross.notes.common.handle
+import ru.gross.notes.interactors.*
 import ru.gross.notes.mapper.NoteDetailViewMapper
 
-class NoteDetailsViewModel constructor(
+internal class NoteDetailsViewModel constructor(
     noteId: String?,
     noteDetailMapper: NoteDetailViewMapper,
     displayNoteDetail: DisplayNoteDetail,
     private val updateNote: UpdateNote,
     private val shareNote: ShareNote,
-    private val deleteNote: DeleteNote
-) : ViewModel() {
+    private val deleteNote: DeleteNote,
+    private val notifyDeleteNote: NotifyDeleteNote,
+    private val notifyShareNote: NotifyShareNote
+) : MviViewModel<State, Event, Effect>(State.LoadDetail) {
 
-    /**
-     * Детальная информация заметки.
-     */
-    val details: LiveData<Resource<NoteDetailView>> =
-        displayNoteDetail(noteId)
-            .mapResourceFlow(noteDetailMapper::apply)
-            .asLiveData(viewModelScope.coroutineContext)
+    private val note: NoteDetailView?
+        get() = (state as? State.DisplayDetail)?.detail
 
-    /**
-     * Сохраняет изменения в заметке.
-     */
-    fun saveChanges() {
-        details.value?.value?.let {
-            val args = UpdateNote.Args(it.id, it.title, it.content)
-            updateNote(args)
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            displayNoteDetail(noteId).collect { resource ->
+                resource.handle(successHandler = {
+                    state = State.DisplayDetail(noteDetailMapper(it))
+                })
+            }
+        }
+
+        viewModelScope.launch {
+            notifyShareNote.onShareEvent.collect {
+                this@NoteDetailsViewModel.note?.id
+                    ?.let { shareNote(ShareNote.Args(viewModelScope, it)) }
+            }
+        }
+
+        viewModelScope.launch {
+            notifyDeleteNote.onDeleteEvent.collect {
+                postEffect(Effect.DisplayDeleteDialog)
+            }
         }
     }
 
-    /**
-     * Отправляет заметку
-     */
-    fun shareIt() {
-        details.value?.value?.id
-            ?.let { shareNote(ShareNote.Args(viewModelScope, it)) }
-    }
-
-    /**
-     * Удаляет заметку
-     */
-    fun deleteIt() {
-        details.value?.value?.id
-            ?.let { deleteNote(it) }
+    override fun submitEvent(event: Event) {
+        when (event) {
+            Event.DeleteNote -> note?.id?.let {
+                deleteNote(it)
+            }
+            is Event.SaveChanges -> note?.let {
+                when {
+                    !it.isFilled -> postEffect(Effect.GoBack)
+                    it.id == null && it.isFilled && !event.confirmed -> postEffect(Effect.DisplaySaveDialog)
+                    else -> {
+                        val args = UpdateNote.Args(it.id, it.title, it.content)
+                        updateNote(args)
+                        postEffect(Effect.GoBack)
+                    }
+                }
+            }
+        }
     }
 
     class Factory @AssistedInject constructor(
@@ -61,7 +74,9 @@ class NoteDetailsViewModel constructor(
         private val noteDetailMapper: NoteDetailViewMapper,
         private val updateNote: UpdateNote,
         private val shareNote: ShareNote,
-        private val deleteNote: DeleteNote
+        private val deleteNote: DeleteNote,
+        private val notifyDeleteNote: NotifyDeleteNote,
+        private val notifyShareNote: NotifyShareNote
     ) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
@@ -72,7 +87,9 @@ class NoteDetailsViewModel constructor(
                 displayNoteDetail,
                 updateNote,
                 shareNote,
-                deleteNote
+                deleteNote,
+                notifyDeleteNote,
+                notifyShareNote
             ) as T
         }
 

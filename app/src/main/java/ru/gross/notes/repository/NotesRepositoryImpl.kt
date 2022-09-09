@@ -15,21 +15,20 @@ import javax.inject.Inject
  * Данная реализация имеет зависимости конкретного фреймворка, поэтому вынесена в самый верхний уровень.
  * @author gross_va
  */
-class NotesRepositoryImpl @Inject constructor(
+internal class NotesRepositoryImpl @Inject constructor(
     private val dao: NotesDao,
     private val entityMapper: NoteEntityMapper,
 ) : NotesRepository {
     override fun getById(id: String?): Flow<Resource<Note>> = resourceFlow {
         val source = id?.let {
-            dao.getByIdSuspend(it)
-                .run(entityMapper::apply)
+            dao.getByIdSuspend(it)?.run(entityMapper::invoke)
         } ?: Note()
         emit(source.asResource())
     }
 
     override fun getAll(): Flow<Resource<List<Note>>> = resourceFlow {
         val source = dao.getNotes()
-            .map { it.mapNotNull(entityMapper::apply).asResource() }
+            .map { it.map(entityMapper::invoke).asResource() }
         emitAll(source)
     }
 
