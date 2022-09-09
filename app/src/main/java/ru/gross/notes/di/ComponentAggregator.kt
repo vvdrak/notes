@@ -35,29 +35,6 @@ internal interface MainModule {
     fun bindNotesRepository(impl: NotesRepositoryImpl): NotesRepository
 
     @Binds
-    fun bindDisplayNotes(impl: DisplayNotesImpl): DisplayNotes
-
-    @Binds
-    fun bindDisplayNoteDetail(impl: DisplayNoteDetailImpl): DisplayNoteDetail
-
-    @Binds
-    fun bindUpdateNote(impl: UpdateNoteImpl): UpdateNote
-
-    @Binds
-    @Singleton
-    fun bindNotifyShareNote(impl: NotifyShareNoteImpl): NotifyShareNote
-
-    @Binds
-    @Singleton
-    fun bindNotifyDeleteNote(impl: NotifyDeleteNoteImpl): NotifyDeleteNote
-
-    @Binds
-    fun bindShareNote(impl: ShareNoteImpl): ShareNote
-
-    @Binds
-    fun bindDeleteNote(impl: DeleteNoteImpl): DeleteNote
-
-    @Binds
     fun bindNoteDetailMapper(impl: NoteDetailViewMapper): Mapper<*, *>
 
     @Binds
@@ -77,7 +54,7 @@ internal object UIModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object PersistModule {
+internal object DatabaseModule {
 
     @Provides
     @Singleton

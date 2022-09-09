@@ -38,7 +38,7 @@ internal class NotesAdapter : DataBoundRecyclerAdapter<NoteView, NoteViewHolder>
     }
 }
 
-class NoteViewHolder(binding: NoteItemLayoutBinding) :
+internal class NoteViewHolder(binding: NoteItemLayoutBinding) :
     DataBoundViewHolder<NoteItemLayoutBinding>(binding) {
 
     fun bindTo(note: NoteView, l: ((View, NoteView) -> Unit)?) = with(binding) {

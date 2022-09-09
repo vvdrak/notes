@@ -7,19 +7,12 @@ import ru.gross.notes.repository.NotesRepository
 import javax.inject.Inject
 
 /**
- * Вариант использования *Отображение заметок*
- *
- * @author gross_va
- */
-interface DisplayNotes : UseCase<Any?, Flow<Resource<List<Note>>>>
-
-/**
  * Описывает реализацию варианта использования *Отображение заметок*
  *
  * @author gross_va
  */
-class DisplayNotesImpl @Inject constructor(
+class DisplayNotes @Inject constructor(
     private val repository: NotesRepository
-) : DisplayNotes {
-    override fun invoke(args: Any?): Flow<Resource<List<Note>>> = repository.getAll()
+) {
+    suspend operator fun invoke(): Flow<Resource<List<Note>>> = repository.getAll()
 }

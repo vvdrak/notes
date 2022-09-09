@@ -16,20 +16,20 @@ interface NotesRepository : Repository {
      * В случае передачи *null* вернет пустой объект для добавления.
      * @param id Идентификтаор заметки.
      */
-    fun getById(id: String?): Flow<Resource<Note>>
+    suspend fun getById(id: String?): Resource<Note>
 
     /**
      * Возвращает список заметок.
      */
-    fun getAll(): Flow<Resource<List<Note>>>
+    suspend fun getAll(): Flow<Resource<List<Note>>>
 
     /**
      * Обновляет информацию в заметке.
      */
-    fun update(id: String?, title: String?, content: String?)
+    suspend fun update(id: String?, title: String?, content: String?)
 
     /**
      * Удаляет [заметку][Note] с идентификатором [id]
      */
-    fun remove(id: String)
+    suspend fun remove(id: String)
 }

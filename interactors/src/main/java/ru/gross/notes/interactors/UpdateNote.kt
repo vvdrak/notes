@@ -4,17 +4,13 @@ import ru.gross.notes.repository.NotesRepository
 import javax.inject.Inject
 
 /**
- * Вариант использования *Обновить заметку*
+ * Реализация варианта использования *Обновить заметку*
  *
  * @author gross_va
  */
-interface UpdateNote : UseCase<UpdateNote.Args, Unit> {
-
-    /**
-     * Описывает аргументы варианта использования.
-     *
-     * @author gross_va
-     */
+class UpdateNote @Inject constructor(
+    private val notesRepository: NotesRepository
+) {
     data class Args(
         /**
          * Идентификатор заметки.
@@ -31,17 +27,8 @@ interface UpdateNote : UseCase<UpdateNote.Args, Unit> {
          */
         val content: String?
     )
-}
 
-/**
- * Реализация варианта использования *Обновить заметку*
- *
- * @author gross_va
- */
-class UpdateNoteImpl @Inject constructor(
-    private val notesRepository: NotesRepository
-) : UpdateNote {
-    override fun invoke(args: UpdateNote.Args) {
+    suspend operator fun invoke(args: Args) {
         notesRepository.update(args.id, args.title, args.content)
     }
 }

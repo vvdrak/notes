@@ -19,7 +19,7 @@ internal class NotesViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            displayNotes(null)
+            displayNotes()
                 .mapResourceFlow(mapNote::invoke)
                 .collect { resource ->
                     resource.handle(

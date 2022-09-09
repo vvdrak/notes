@@ -4,16 +4,14 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
+import javax.inject.Singleton
 
-interface NotifyDeleteNote : UseCase<Unit, Unit> {
-    val onDeleteEvent: Flow<Unit>
-}
-
-class NotifyDeleteNoteImpl @Inject constructor() : NotifyDeleteNote {
+@Singleton
+class NotifyDeleteNote @Inject constructor() {
     private val _onDeleteEvent = MutableSharedFlow<Unit>(1, 0, BufferOverflow.DROP_OLDEST)
-    override val onDeleteEvent: Flow<Unit> = _onDeleteEvent
+    val onDeleteEvent: Flow<Unit> = _onDeleteEvent
 
-    override fun invoke(args: Unit) {
-        _onDeleteEvent.tryEmit(Unit)
+    suspend operator fun invoke() {
+        _onDeleteEvent.emit(Unit)
     }
 }

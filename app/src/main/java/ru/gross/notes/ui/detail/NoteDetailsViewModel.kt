@@ -28,17 +28,19 @@ internal class NoteDetailsViewModel constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            displayNoteDetail(noteId).collect { resource ->
-                resource.handle(successHandler = {
+            displayNoteDetail(noteId).handle(
+                loadingHandler = {
+                    state = State.LoadDetail
+                },
+                successHandler = {
                     state = State.DisplayDetail(noteDetailMapper(it))
                 })
-            }
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             notifyShareNote.onShareEvent.collect {
                 this@NoteDetailsViewModel.note?.id
-                    ?.let { shareNote(ShareNote.Args(viewModelScope, it)) }
+                    ?.let { shareNote(it) }
             }
         }
 
@@ -52,16 +54,24 @@ internal class NoteDetailsViewModel constructor(
     override fun submitEvent(event: Event) {
         when (event) {
             Event.DeleteNote -> note?.id?.let {
-                deleteNote(it)
+                viewModelScope.launch(Dispatchers.IO) {
+                    deleteNote(it)
+                }
             }
             is Event.SaveChanges -> note?.let {
                 when {
-                    !it.isFilled -> postEffect(Effect.GoBack)
-                    it.id == null && it.isFilled && !event.confirmed -> postEffect(Effect.DisplaySaveDialog)
-                    else -> {
-                        val args = UpdateNote.Args(it.id, it.title, it.content)
-                        updateNote(args)
+                    !it.isFilled -> {
                         postEffect(Effect.GoBack)
+                    }
+                    it.id == null && it.isFilled && !event.confirmed -> {
+                        postEffect(Effect.DisplaySaveDialog)
+                    }
+                    else -> {
+                        viewModelScope.launch(Dispatchers.IO) {
+                            val args = UpdateNote.Args(it.id, it.title, it.content)
+                            updateNote(args)
+                            postEffect(Effect.GoBack)
+                        }
                     }
                 }
             }

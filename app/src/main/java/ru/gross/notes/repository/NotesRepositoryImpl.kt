@@ -1,7 +1,6 @@
 package ru.gross.notes.repository
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.map
 import ru.gross.notes.common.Resource
 import ru.gross.notes.common.asResource
@@ -19,24 +18,18 @@ internal class NotesRepositoryImpl @Inject constructor(
     private val dao: NotesDao,
     private val entityMapper: NoteEntityMapper,
 ) : NotesRepository {
-    override fun getById(id: String?): Flow<Resource<Note>> = resourceFlow {
+    override suspend fun getById(id: String?): Resource<Note> {
         val source = id?.let {
             dao.getByIdSuspend(it)?.run(entityMapper::invoke)
         } ?: Note()
-        emit(source.asResource())
+        return source.asResource()
     }
 
-    override fun getAll(): Flow<Resource<List<Note>>> = resourceFlow {
-        val source = dao.getNotes()
-            .map { it.map(entityMapper::invoke).asResource() }
-        emitAll(source)
-    }
+    override suspend fun getAll(): Flow<Resource<List<Note>>> =
+        dao.getNotes().map { it.map(entityMapper::invoke).asResource() }
 
-    override fun update(id: String?, title: String?, content: String?) = execute {
+    override suspend fun update(id: String?, title: String?, content: String?) =
         dao.updateWithTransaction(id, title, content)
-    }
 
-    override fun remove(id: String) = execute {
-        dao.remove(id)
-    }
+    override suspend fun remove(id: String) = dao.remove(id)
 }
