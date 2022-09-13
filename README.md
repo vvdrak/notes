@@ -21,3 +21,7 @@
 Приложение использует принципы Clean Architecture, построено на MVI в сочитании
 с [Unidirectional data flow](https://developer.android.com/jetpack/compose/architecture#udf).
 Соответствует SOLID
+
+## Compose
+
+Реализация на Compose в одноименной ветке. [link](https://github.com/vvdrak/notes/tree/master-compose) 
