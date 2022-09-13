@@ -6,5 +6,11 @@ import javax.inject.Inject
 
 internal class NoteViewListMapper @Inject constructor() : Mapper<List<Note>, List<NoteView>> {
     override fun invoke(input: List<Note>): List<NoteView> =
-        input.map { NoteView(it.id, it.title, it.content) }
+        input.mapNotNull {
+            NoteView(
+                id = it.id ?: return@mapNotNull null,
+                title = it.title ?: return@mapNotNull null,
+                content = it.content ?: return@mapNotNull null
+            )
+        }
 }

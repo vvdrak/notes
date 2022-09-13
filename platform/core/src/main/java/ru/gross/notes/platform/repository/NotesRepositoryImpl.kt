@@ -19,11 +19,10 @@ internal class NotesRepositoryImpl @Inject constructor(
     private val dao: NotesDao,
     private val entityMapper: NoteEntityMapper,
 ) : NotesRepository {
-    override suspend fun getById(id: String?): Resource<Note> {
-        val source = id?.let {
-            dao.getByIdSuspend(it)?.run(entityMapper::invoke)
-        } ?: Note()
-        return source.asResource()
+    override suspend fun getById(id: String): Resource<Note> {
+        return dao.getByIdSuspend(id)
+            ?.run(entityMapper::invoke)
+            ?.asResource() ?: Resource.error("$NOTHING_ERROR_TEXT $id")
     }
 
     override suspend fun getAll(): Flow<Resource<List<Note>>> =
@@ -33,4 +32,8 @@ internal class NotesRepositoryImpl @Inject constructor(
         dao.updateWithTransaction(id, title, content)
 
     override suspend fun remove(id: String) = dao.remove(id)
+
+    private companion object {
+        private const val NOTHING_ERROR_TEXT = "No Note with id"
+    }
 }

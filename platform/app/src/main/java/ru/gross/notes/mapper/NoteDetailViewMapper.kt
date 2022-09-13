@@ -7,5 +7,12 @@ import javax.inject.Inject
 internal class NoteDetailViewMapper @Inject constructor() :
     Mapper<Note, NoteDetailView> {
     override fun invoke(input: Note): NoteDetailView =
-        input.let { NoteDetailView(it.id, it.creationDate, it.title, it.content) }
+        input.let {
+            NoteDetailView(
+                id = it.id,
+                creationDate = it.creationDate,
+                title = it.title.orEmpty(),
+                content = it.content.orEmpty()
+            )
+        }
 }

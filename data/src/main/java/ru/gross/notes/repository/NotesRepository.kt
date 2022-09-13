@@ -16,7 +16,7 @@ interface NotesRepository {
      * В случае передачи *null* вернет пустой объект для добавления.
      * @param id Идентификтаор заметки.
      */
-    suspend fun getById(id: String?): Resource<Note>
+    suspend fun getById(id: String): Resource<Note>
 
     /**
      * Возвращает список заметок.

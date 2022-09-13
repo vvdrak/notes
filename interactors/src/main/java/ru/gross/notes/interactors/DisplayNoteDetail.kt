@@ -1,6 +1,7 @@
 package ru.gross.notes.interactors
 
 import ru.gross.notes.common.Resource
+import ru.gross.notes.common.asResource
 import ru.gross.notes.domain.Note
 import ru.gross.notes.repository.NotesRepository
 import javax.inject.Inject
@@ -13,5 +14,6 @@ import javax.inject.Inject
 class DisplayNoteDetail @Inject constructor(
     private val repository: NotesRepository
 ) {
-    suspend operator fun invoke(id: String?): Resource<Note> = repository.getById(id)
+    suspend operator fun invoke(id: String?): Resource<Note> =
+        id?.let { repository.getById(it) } ?: Note().asResource()
 }

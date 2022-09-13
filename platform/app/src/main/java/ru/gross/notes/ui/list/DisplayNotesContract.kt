@@ -31,17 +31,17 @@ data class NoteView(
      * Идентификатор заметки.
      */
     @JvmField
-    val id: String? = null,
+    val id: String,
 
     /**
      * Заголовок заметки.
      */
     @JvmField
-    var title: CharSequence? = null,
+    val title: String,
 
     /**
      * Текст заметки.
      */
     @JvmField
-    var content: CharSequence? = null
+    val content: String
 ) : Parcelable

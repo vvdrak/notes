@@ -49,18 +49,18 @@ data class NoteDetailView(
      * Заголовок заметки.
      */
     @JvmField
-    val title: String? = null,
+    val title: String,
 
     /**
      * Текст заметки.
      */
     @JvmField
-    val content: String? = null
+    val content: String
 ) : Parcelable {
 
     /**
      * Возвращает флаг заполненности заметки.
      */
     val isFilled: Boolean
-        get() = id != null || creationDate != null || title != null || content != null
+        get() = id != null || creationDate != null || title.isNotEmpty() || content.isNotEmpty()
 }
