@@ -59,6 +59,7 @@ internal class NoteDetailsViewModel @Inject constructor(
             Event.DeleteNote -> note?.id?.let {
                 viewModelScope.launch(Dispatchers.IO) {
                     deleteNote(it)
+                    postEffect(Effect.GoBack)
                 }
             }
             is Event.SaveChanges -> note?.let {
@@ -78,6 +79,25 @@ internal class NoteDetailsViewModel @Inject constructor(
                     }
                 }
             }
+            is Event.NewText.Title -> {
+                state = state.changeDetail {
+                    it.copy(title = event.value)
+                }
+            }
+            is Event.NewText.Content -> {
+                state = state.changeDetail {
+                    it.copy(content = event.value)
+                }
+            }
+            is Event.GoBack -> {
+                postEffect(Effect.GoBack)
+            }
         }
+    }
+
+    private fun State.changeDetail(
+        block: (NoteDetailView) -> NoteDetailView
+    ): State = (this as State.DisplayDetail).run {
+        copy(detail = block(detail))
     }
 }

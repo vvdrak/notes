@@ -3,6 +3,7 @@ package ru.gross.notes.ui.detail
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.dataBindings
 import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -28,6 +29,12 @@ internal class DetailNoteFragment : MviFragment<State, Effect>(R.layout.fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.editable = true
+        binding.noteContentHolder.doAfterTextChanged {
+            viewModel.submitEvent(Event.NewText.Content(it.toString()))
+        }
+        binding.noteTitleHolder.doAfterTextChanged {
+            viewModel.submitEvent(Event.NewText.Title(it.toString()))
+        }
     }
 
     override fun handleViewEffect(effect: Effect) {
@@ -37,7 +44,6 @@ internal class DetailNoteFragment : MviFragment<State, Effect>(R.layout.fragment
                     .setTitle(R.string.delete_note_confirmation_title)
                     .setPositiveButton(R.string.default_confirm_btn_text) { _, _ ->
                         viewModel.submitEvent(Event.DeleteNote)
-                        navigateUp()
                     }
                     .setNegativeButton(R.string.default_negative_btn_text) { _, _ -> }
                     .show()
@@ -48,7 +54,9 @@ internal class DetailNoteFragment : MviFragment<State, Effect>(R.layout.fragment
                     .setPositiveButton(R.string.default_confirm_btn_text) { _, _ ->
                         viewModel.submitEvent(Event.SaveChanges(true))
                     }
-                    .setNegativeButton(R.string.default_negative_btn_text) { _, _ -> navigateUp() }
+                    .setNegativeButton(R.string.default_negative_btn_text) { _, _ ->
+                        viewModel.submitEvent(Event.GoBack)
+                    }
                     .show()
             }
             Effect.GoBack -> navigateUp()

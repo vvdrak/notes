@@ -16,7 +16,14 @@ internal sealed class State : ViewState {
 
 internal sealed class Event : ViewEvent {
     object DeleteNote : Event()
+    object GoBack : Event()
     data class SaveChanges(val confirmed: Boolean) : Event()
+    sealed class NewText : Event() {
+        abstract val value: String
+
+        data class Title(override val value: String) : NewText()
+        data class Content(override val value: String) : NewText()
+    }
 }
 
 internal sealed class Effect : ViewEffect {
@@ -26,7 +33,7 @@ internal sealed class Effect : ViewEffect {
 }
 
 @Parcelize
-class NoteDetailView(
+data class NoteDetailView(
     /**
      * Идентификатор заметки.
      */
@@ -42,13 +49,13 @@ class NoteDetailView(
      * Заголовок заметки.
      */
     @JvmField
-    var title: String? = null,
+    val title: String? = null,
 
     /**
      * Текст заметки.
      */
     @JvmField
-    var content: String? = null
+    val content: String? = null
 ) : Parcelable {
 
     /**
