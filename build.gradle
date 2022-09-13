@@ -1,21 +1,23 @@
 buildscript {
     ext.versions = [
             jvmTarget       : JavaVersion.VERSION_1_8,
-            compileSdk      : 31,
+            compileSdk      : 33,
             minSdk          : 23,
-            targetSdk       : 31,
+            targetSdk       : 33,
 
+            compose         : '1.3.1',
+            compose_old     : '1.2.1',
             kotlin          : "1.7.10",
             coroutines      : '1.6.4',
-            fragment        : '1.5.2',
-            navigation      : '2.5.1',
+            navigation      : '2.5.2',
+            hilt_navigation : '1.0.0',
             room            : '2.4.3',
             hilt            : '2.42',
-            core            : '1.8.0',
-            appcompat       : '1.3.0',
-            material        : '1.3.0',
+            core            : '1.9.0',
+            appcompat       : '1.5.1',
             lifecycle       : '2.5.1',
-            constraintlayout: '2.1.4',
+            constraintlayout: '1.0.1',
+            activity        : '1.5.1',
             leakCanary      : '2.7',
             javax           : '1'
     ]
@@ -27,7 +29,6 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.2'
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$versions.hilt"
     }

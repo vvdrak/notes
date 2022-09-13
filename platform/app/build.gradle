@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
-apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
@@ -16,10 +15,14 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables {
+            useSupportLibrary true
+        }
     }
 
     buildFeatures {
-        dataBinding = true
+        compose true
     }
 
     buildTypes {
@@ -36,6 +39,16 @@ android {
 
     kotlinOptions {
         jvmTarget = versions.jvmTarget
+    }
+
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = versions.compose
     }
 }
 
@@ -64,33 +77,40 @@ dependencies {
 dependencies {
     implementation "androidx.core:core-ktx:$versions.core"
 
-    // fragment
-    implementation "androidx.fragment:fragment-ktx:$versions.fragment"
-
     // lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.lifecycle"
 
     // navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
-    implementation "androidx.navigation:navigation-ui-ktx:$versions.navigation"
+    implementation "androidx.navigation:navigation-compose:$versions.navigation"
+
+    // activity
+    implementation "androidx.activity:activity-compose:$versions.activity"
 
     // ui
+    implementation "androidx.compose.ui:ui:$versions.compose_old"
+    implementation "androidx.compose.ui:ui-tooling-preview:$versions.compose_old"
+
+    // material
+    implementation "androidx.compose.material:material:$versions.compose_old"
+
+    // constraint
+    implementation "androidx.constraintlayout:constraintlayout-compose:$versions.constraintlayout"
+
+    // appcompat
     implementation "androidx.appcompat:appcompat:$versions.appcompat"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation "androidx.constraintlayout:constraintlayout:$versions.constraintlayout"
+
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$versions.compose_old"
+    debugImplementation "androidx.compose.ui:ui-tooling:$versions.compose_old"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$versions.compose_old"
 }
 
 // dagger hilt
 dependencies {
     implementation "com.google.dagger:hilt-android:$versions.hilt"
+    implementation "androidx.hilt:hilt-navigation-compose:$versions.hilt_navigation"
     kapt "com.google.dagger:hilt-compiler:$versions.hilt"
-}
-
-// material design
-dependencies {
-    implementation "com.google.android.material:material:$versions.material"
 }
 
 // canary

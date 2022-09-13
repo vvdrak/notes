@@ -5,8 +5,7 @@
 
 ## Используемый стек
 
-1. [Data Binding Library](https://developer.android.com/topic/libraries/data-binding) -- Привязка
-   данных;
+1. [Jetpack Compose](https://developer.android.com/jetpack/compose) -- UI toolkit;
 2. [Jetpack Navigation](https://developer.android.com/guide/navigation/) -- Навигация;
 3. [Jetpack ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) -- View
    Model;
