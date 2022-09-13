@@ -16,16 +16,19 @@ interface Navigator {
 
     /**
      * Отображает детальную информацию о заметке.
-     * @param activity Активити приложения.
      * @param viewState Объект модели представления, связанный с переходом на детальную информацию о заметке.
      */
     fun showNoteDetail(viewState: NoteView)
 
     /**
      * Отображает экран добавления заметки.
-     * @param activity Активити приложения.
      */
     fun showAddNote()
+
+    /**
+     * Отображает предыдущий экран или выходит из приложения.
+     */
+    fun navigateUp(): Boolean
 }
 
 class NavigatorImpl @Inject constructor(
@@ -46,4 +49,7 @@ class NavigatorImpl @Inject constructor(
             direction = DisplayNotesFragmentDirections.toNoteCard(null),
         )
     }
+
+    override fun navigateUp(): Boolean =
+        activity.findNavController(R.id.nav_host_fragment).navigateUp()
 }

@@ -11,13 +11,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.gross.notes.R
 import ru.gross.notes.databinding.FragmentNoteDetailCardBinding
 import ru.gross.notes.mvi.MviFragment
+import ru.gross.notes.navigation.Navigator
 import ru.gross.notes.utils.addBackPressedCallback
-import ru.gross.notes.utils.navigateUp
+import javax.inject.Inject
 
 @AndroidEntryPoint
 internal class DetailNoteFragment : MviFragment<State, Effect>(R.layout.fragment_note_detail_card) {
     private val binding by dataBindings(FragmentNoteDetailCardBinding::bind)
     override val viewModel: NoteDetailsViewModel by viewModels()
+
+    @Inject
+    lateinit var navigator: Navigator
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -59,7 +63,7 @@ internal class DetailNoteFragment : MviFragment<State, Effect>(R.layout.fragment
                     }
                     .show()
             }
-            Effect.GoBack -> navigateUp()
+            Effect.GoBack -> navigator.navigateUp()
         }
     }
 
