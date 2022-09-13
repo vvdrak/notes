@@ -1,23 +1,16 @@
 package ru.gross.notes.ui
 
-import android.app.Activity
-import android.content.Context
-import android.widget.Toast
-import androidx.fragment.app.Fragment
+import android.view.View
+import com.google.android.material.snackbar.Snackbar
 import ru.gross.notes.R
 
-private object StubUI {
+internal object StubUI {
 
     @JvmStatic
-    fun showStubMessage(context: Context) {
-        val message = context.getString(R.string.feature_not_available_text)
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    fun showStubMessage(view: View) {
+        val message = view.context.getString(R.string.feature_not_available_text)
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).apply {
+            anchorView = view
+        }.show()
     }
 }
-
-fun Fragment.displayStubMessage() =
-    StubUI.showStubMessage(requireContext())
-
-
-fun Activity.displayStubMessage() =
-    StubUI.showStubMessage(this)

@@ -1,4 +1,4 @@
-package ru.gross.mvi
+package ru.gross.notes.mvi
 
 import android.os.Bundle
 import android.view.View
@@ -7,8 +7,10 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import ru.gross.mvi.ViewEffect
+import ru.gross.mvi.ViewState
 
-abstract class MviFragment<TState : ViewState, TEffect : ViewEffect>(
+internal abstract class MviFragment<TState : ViewState, TEffect : ViewEffect>(
     @LayoutRes layoutId: Int
 ) : Fragment(layoutId), MviContract<TState, TEffect> {
 

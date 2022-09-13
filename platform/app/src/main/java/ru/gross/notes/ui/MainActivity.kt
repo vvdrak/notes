@@ -6,10 +6,11 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.dataBindings
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
-import ru.gross.mvi.MviActivity
 import ru.gross.notes.R
 import ru.gross.notes.databinding.ActivityMainBinding
+import ru.gross.notes.mvi.MviActivity
 import ru.gross.notes.navigation.Navigator
+import ru.gross.notes.ui.StubUI.showStubMessage
 import ru.gross.notes.ui.detail.DetailNoteFragmentArgs
 import ru.gross.notes.utils.navigateUp
 import javax.inject.Inject
@@ -86,7 +87,7 @@ internal class MainActivity : MviActivity<State, Effect>() {
                     navigateUp(navController)
                 }
             }
-            Effect.DisplayStub -> displayStubMessage()
+            Effect.DisplayStub -> showStubMessage(binding.fab)
         }
     }
 

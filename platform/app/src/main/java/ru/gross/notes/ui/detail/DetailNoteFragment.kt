@@ -5,27 +5,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.dataBindings
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import ru.gross.mvi.MviFragment
 import ru.gross.notes.R
 import ru.gross.notes.databinding.FragmentNoteDetailCardBinding
+import ru.gross.notes.mvi.MviFragment
 import ru.gross.notes.utils.addBackPressedCallback
 import ru.gross.notes.utils.navigateUp
-import javax.inject.Inject
 
 @AndroidEntryPoint
 internal class DetailNoteFragment : MviFragment<State, Effect>(R.layout.fragment_note_detail_card) {
-    private val args: DetailNoteFragmentArgs by navArgs()
     private val binding by dataBindings(FragmentNoteDetailCardBinding::bind)
-
-    @Inject
-    lateinit var factory: NoteDetailsViewModel.Factory.AssistedFactory
-
-    override val viewModel: NoteDetailsViewModel by viewModels {
-        factory.create(args.noteId)
-    }
+    override val viewModel: NoteDetailsViewModel by viewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

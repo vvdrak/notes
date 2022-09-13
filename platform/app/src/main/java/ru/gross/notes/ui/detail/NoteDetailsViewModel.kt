@@ -1,10 +1,8 @@
 package ru.gross.notes.ui.detail
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.gross.mvi.MviViewModel
@@ -12,9 +10,13 @@ import ru.gross.notes.common.handle
 import ru.gross.notes.interactors.*
 import ru.gross.notes.mapper.NoteDetailViewMapper
 import ru.gross.notes.platform.interactors.ShareNote
+import javax.inject.Inject
 
-internal class NoteDetailsViewModel constructor(
-    noteId: String?,
+private const val NAN_ARG_KEY = "noteId"
+
+@HiltViewModel
+internal class NoteDetailsViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     noteDetailMapper: NoteDetailViewMapper,
     displayNoteDetail: DisplayNoteDetail,
     private val updateNote: UpdateNote,
@@ -29,7 +31,7 @@ internal class NoteDetailsViewModel constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            displayNoteDetail(noteId).handle(
+            displayNoteDetail(savedStateHandle[NAN_ARG_KEY]).handle(
                 loadingHandler = {
                     state = State.LoadDetail
                 },
@@ -76,37 +78,6 @@ internal class NoteDetailsViewModel constructor(
                     }
                 }
             }
-        }
-    }
-
-    class Factory @AssistedInject constructor(
-        @Assisted("noteId") private var noteId: String?,
-        private val displayNoteDetail: DisplayNoteDetail,
-        private val noteDetailMapper: NoteDetailViewMapper,
-        private val updateNote: UpdateNote,
-        private val shareNote: ShareNote,
-        private val deleteNote: DeleteNote,
-        private val notifyDeleteNote: NotifyDeleteNote,
-        private val notifyShareNote: NotifyShareNote
-    ) : ViewModelProvider.Factory {
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return NoteDetailsViewModel(
-                noteId,
-                noteDetailMapper,
-                displayNoteDetail,
-                updateNote,
-                shareNote,
-                deleteNote,
-                notifyDeleteNote,
-                notifyShareNote
-            ) as T
-        }
-
-        @dagger.assisted.AssistedFactory
-        interface AssistedFactory {
-            fun create(@Assisted("noteId") noteId: String?): Factory
         }
     }
 }

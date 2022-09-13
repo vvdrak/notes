@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.dataBindings
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import ru.gross.mvi.MviFragment
+import ru.gross.notes.mvi.MviFragment
 import ru.gross.notes.R
 import ru.gross.notes.databinding.FragmentDisplayNotesBinding
 import ru.gross.notes.navigation.Navigator

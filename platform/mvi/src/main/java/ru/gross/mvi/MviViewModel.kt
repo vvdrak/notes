@@ -25,7 +25,7 @@ abstract class MviViewModel<TState : ViewState, TEvent : ViewEvent, TEffect : Vi
         }
     }
 
-    protected var state: TState = initial
+    var state: TState = initial
         @Synchronized
         get
         @Synchronized
