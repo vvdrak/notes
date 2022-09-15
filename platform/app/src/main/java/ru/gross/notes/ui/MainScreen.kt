@@ -19,12 +19,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import ru.gross.notes.R
+import ru.gross.notes.navigation.HandleRouteChange
+import ru.gross.notes.navigation.MainNavHost
 import ru.gross.notes.navigation.Navigator
 import ru.gross.notes.ui.theme.ApplicationTheme
-import ru.gross.notes.utils.*
+import ru.gross.notes.utils.collectState
+import ru.gross.notes.utils.onEffect
 
 @Composable
 internal fun MainScreen(
@@ -38,9 +40,7 @@ internal fun MainScreen(
         checkNotNull(LocalOnBackPressedDispatcherOwner.current).onBackPressedDispatcher
 
     val navController = rememberNavController()
-    navigator.attachToNavController(navController)
-
-    HandleRouteChange(navigator) {
+    HandleRouteChange(navController) {
         viewModel.submitEvent(Event.SetCurrentScreen(it))
     }
 
@@ -76,11 +76,10 @@ internal fun MainScreen(
         onMenuClick = { viewModel.submitEvent(Event.ClickEvent.Menu) },
         onSearchClick = { viewModel.submitEvent(Event.ClickEvent.Search) }
     ) {
-        NavHost(
+        MainNavHost(
             modifier = Modifier.padding(bottom = it.calculateBottomPadding()),
-            navController = navigator.navController,
-            startDestination = navigator.startDestination,
-            builder = { navigator.createGraph(this) }
+            navigator = navigator,
+            navController = navController
         )
     }
 }

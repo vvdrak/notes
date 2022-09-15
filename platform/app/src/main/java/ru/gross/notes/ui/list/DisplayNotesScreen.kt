@@ -26,7 +26,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import ru.gross.notes.navigation.Navigator
 import ru.gross.notes.ui.Margin12
 import ru.gross.notes.ui.Margin8
 import ru.gross.notes.ui.ProgressIndicator
@@ -45,12 +44,12 @@ private const val CONTENT_MAX_LINES = 6
 internal fun DisplayNotesScreen(
     modifier: Modifier = Modifier,
     viewModel: NotesViewModel = hiltViewModel(),
-    navigator: Navigator
+    onNavigateNoteDetail: (NoteView) -> Unit
 ) {
     viewModel.onEffect {
         when (it) {
             is Effect.DisplayNote -> {
-                navigator.showNoteDetail(it.note)
+                onNavigateNoteDetail(it.note)
             }
         }
     }

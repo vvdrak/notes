@@ -19,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.gross.notes.R
-import ru.gross.notes.navigation.Navigator
 import ru.gross.notes.ui.AppDialog
 import ru.gross.notes.ui.Margin24
 import ru.gross.notes.ui.ProgressIndicator
@@ -33,7 +32,7 @@ import ru.gross.notes.utils.onEffect
 internal fun NoteDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: NoteDetailsViewModel = hiltViewModel(),
-    navigator: Navigator
+    onNavigateUp: () -> Boolean
 ) = Column(
     modifier = modifier
         .fillMaxSize()
@@ -54,7 +53,7 @@ internal fun NoteDetailScreen(
                 openSaveDialog = true
             }
             Effect.GoBack -> {
-                navigator.navigateUp()
+                onNavigateUp()
             }
         }
     }
